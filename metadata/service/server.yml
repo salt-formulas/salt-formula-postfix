@@ -1,0 +1,6 @@
+applications:
+  - postfix
+parameters:
+  postfix:
+    server:
+      enabled: true
