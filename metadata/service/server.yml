@@ -4,3 +4,14 @@ parameters:
   postfix:
     server:
       enabled: true
+      myhostname: ${linux:system:name}
+      myorigin: ${linux:system:name}.${linux:system:domain}
+      mailbox_base: /srv/mail
+      mysql:
+        user: mailserver
+        password: ${_param:mysql_mailserver_password}
+        host: 127.0.0.1
+      ssl:
+        enabled: true
+        key_file: /etc/ssl/private/ssl-cert-snakeoil.key
+        cert_file: /etc/ssl/certs/ssl-cert-snakeoil.pem

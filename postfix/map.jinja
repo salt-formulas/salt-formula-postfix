@@ -1,6 +1,6 @@
 {% set server = salt['grains.filter_by']({
     'Debian': {
-        'pkgs': ['postfix'],
+        'pkgs': ['postfix', 'postfix-mysql'],
         'service': 'postfix',
     },
 }, merge=salt['pillar.get']('postfix:server')) %}

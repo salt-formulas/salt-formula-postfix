@@ -1,0 +1,6 @@
+{%- from "postfix/map.jinja" import server with context %}
+user = {{ server.mysql.user }}
+password = {{ server.mysql.password }}
+hosts = {{ server.mysql.host }}
+dbname = mailserver
+query = SELECT maildir FROM mailbox WHERE username = '%s'

@@ -10,4 +10,23 @@ postfix_service:
   service.running:
     - name: {{ server.service }}
     - require:
-      - pkg: postfix_packages
+      - file: postfix_main_config
+
+postfix_main_config:
+  file.managed:
+  - name: /etc/postfix/main.cf
+  - source: salt://postfix/files/main.cf
+  - mode: 644
+  - template: jinja
+  - require:
+    - pkg: postfix_packages
+  - watch_in:
+    - service: postfix_service
+
+{%- if grains.os_family == 'Debian' %}
+
+/etc/mailname:
+  file.managed:
+  - contents: {{ server.myorigin }}
+
+{%- endif %}
