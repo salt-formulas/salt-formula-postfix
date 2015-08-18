@@ -4,6 +4,7 @@
 
 include:
 - postfix.common
+- postfix.server.admin
 
 postfix_mysql_virtual_alias:
   file.managed:

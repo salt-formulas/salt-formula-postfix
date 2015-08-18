@@ -7,8 +7,24 @@ parameters:
       myhostname: ${linux:system:name}
       myorigin: ${linux:system:name}.${linux:system:domain}
       mailbox_base: /srv/mail
+      admin:
+        enabled: true
+        encrypt: "dovecot:MD5-CRYPT"
+        url: "/admin"
+        # Default password is changeme
+        setup_password: '9b446964fc68967a60584eff8023eb5d:187b19205ee43e6244fa1b04faac08db4b55410e'
+        email: admin@${linux:system:domain}
+        default_aliases:
+          root: root@${linux:system:domain}
+          abuse: abuse@${linux:system:domain}
+          hostmaster: hostmaster@${linux:system:domain}
+          postmaster: postmaster@${linux:system:domain}
+          webmaster: webmaster@${linux:system:domain}
+        vacation:
+          domain: autoreply.${postfix:server:myorigin}
       mysql:
         user: mailserver
+        database: mailserver
         password: ${_param:mysql_mailserver_password}
         host: 127.0.0.1
       ssl:

@@ -1,4 +1,4 @@
-{% from "postfix/map.jinja" import server with context %}
+{%- from "postfix/map.jinja" import server with context %}
 # See /usr/share/postfix/main.cf.dist for a commented, more complete version
 
 # Debian specific:  Specifying a file name will cause the first
