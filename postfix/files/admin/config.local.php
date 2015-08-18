@@ -15,4 +15,12 @@ $CONF['new_quota_table'] = 'YES';
 
 $CONF['show_footer_text'] = 'NO';
 
+{%- if server.admin.default_aliases %}
+$CONF['default_aliases'] = array (
+    {%- for alias, goto in server.admin.default_aliases.iteritems() %}
+    '{{ alias }}' => '{{ goto }}',
+    {%- endfor %}
+);
+{%- endif %}
+
 /* vim: set expandtab softtabstop=4 tabstop=4 shiftwidth=4: */
