@@ -9,7 +9,7 @@ parameters:
       mailbox_base: /srv/mail
       admin:
         enabled: true
-        encrypt: "dovecot:MD5-CRYPT"
+        encrypt: "md5"
         url: "/admin"
         # Default password is changeme
         setup_password: '9b446964fc68967a60584eff8023eb5d:187b19205ee43e6244fa1b04faac08db4b55410e'
