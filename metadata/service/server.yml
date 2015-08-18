@@ -11,8 +11,8 @@ parameters:
         enabled: true
         encrypt: "md5"
         url: "/admin"
-        # Default password is changeme
-        setup_password: '9b446964fc68967a60584eff8023eb5d:187b19205ee43e6244fa1b04faac08db4b55410e'
+        # Default password is changeme, and this is what you should do
+        setup_password: 'dcae0c85ae2ec6ed7922a98d96a4f891:34de2e58483b2e6df1eb984e030ba7a405dfa1d0'
         email: admin@${linux:system:domain}
         default_aliases:
           root: root@${linux:system:domain}
