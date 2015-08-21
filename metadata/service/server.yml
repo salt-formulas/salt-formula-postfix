@@ -13,7 +13,7 @@ parameters:
         url: "/admin"
         # Default password is changeme, and this is what you should do
         setup_password: 'dcae0c85ae2ec6ed7922a98d96a4f891:34de2e58483b2e6df1eb984e030ba7a405dfa1d0'
-        email: admin@${linux:system:domain}
+        email: postmaster@${linux:system:domain}
         default_aliases:
           root: root@${linux:system:domain}
           abuse: abuse@${linux:system:domain}
@@ -21,7 +21,12 @@ parameters:
           postmaster: postmaster@${linux:system:domain}
           webmaster: webmaster@${linux:system:domain}
         vacation:
+          enabled: false
           domain: autoreply.${postfix:server:myorigin}
+        footer:
+          show_text: true
+          text: "Return to webmail"
+          link: "https://${postfix:server:myorigin}"
       mysql:
         user: mailserver
         database: mailserver
