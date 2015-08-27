@@ -46,9 +46,9 @@ Requirements
 Optional
 --------
 
-- glusterfs (to serve as mail storage backend)
-- dovecot
-- roundcube
+- `glusterfs <https://github.com/tcpcloud/salt-glusterfs-formula>`_ (to serve as mail storage backend
+- `dovecot <https://github.com/tcpcloud/salt-dovecot-formula>`_
+- `roundcube <https://github.com/tcpcloud/salt-roundcube-formula>`_
 
 Configuration parameters
 ========================

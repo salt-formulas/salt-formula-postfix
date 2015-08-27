@@ -4,6 +4,7 @@ parameters:
   postfix:
     server:
       enabled: false
+      myorigin: ${linux:system:name}.${linux:system:domain}
     relay:
       enabled: true
       domain: ${linux:system:domain}
