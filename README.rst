@@ -2,7 +2,7 @@
 Postfix
 =======
 
-Install and configure mailserver.
+Install and configure Postfix.
 
 Available states
 ================
@@ -24,11 +24,21 @@ Available metadata
 ``metadata.postfix.server``
 ---------------------------------------
 
-Setup mailserver
+Setup postfix server
 
 Requirements
 ============
 
+- linux
+- mysql (for mysql backend and postfixadmin)
+- apache (for postfixadmin)
+
+Optional
+--------
+
+- glusterfs (to serve as mail storage backend)
+- dovecot
+- roundcube
 
 Configuration parameters
 ========================
@@ -39,10 +49,54 @@ For complete list of parameters, please check
 Example reclass
 ===============
 
+.. code-block:: yaml
+
+   classes:
+     - service.postfix.server
+   parameters:
+    _param:
+      postfix_origin: mail.eru
+      mysql_mailserver_password: Peixeilaephahmoosa2daihoh4yiaThe
+    postfix:
+      server:
+        origin: ${_param:postfix_origin}
+    mysql:
+      server:
+        database:
+          mailserver:
+            encoding: UTF8
+            locale: cs_CZ
+            users:
+            - name: mailserver
+              password: ${_param:mysql_mailserver_password}
+              host: 127.0.0.1
+              rights: all privileges
+    apache:
+      server:
+        site:
+          postfixadmin:
+            enabled: true
+            type: static
+            name: postfixadmin
+            root: /usr/share/postfixadmin
+            host:
+              name: ${_param:postfix_origin}
+              aliases:
+                - ${linux:system:name}.${linux:system:domain}
+                - ${linux:system:name}
 
 Example pillar
 ==============
 
+Setup without postfixadmin:
+
+.. code-block:: yaml
+
+    postfix:
+      server:
+        origin: ${_param:postfix_origin}
+        admin:
+          enabled: false
 
 Read more
 =========
