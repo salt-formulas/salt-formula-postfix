@@ -27,10 +27,9 @@ smtp_tls_protocols = !SSLv2,!SSLv3
 {%- endif %}
 
 # Virtual
-{#- TODO: get postfix user uid/git and use here #}
-virtual_gid_maps = static:105
-virtual_uid_maps = static:109
-virtual_minimum_uid = 105
+virtual_uid_maps = static:{{ server.user.uid }}
+virtual_gid_maps = static:{{ server.user.gid }}
+virtual_minimum_uid = 100
 virtual_mailbox_base = {{ server.mailbox_base }}
 virtual_transport = virtual
 

@@ -6,6 +6,29 @@ include:
 - postfix.common
 - postfix.server.admin
 
+{%- if not salt['user.info'](server.user.name) %}
+user_vmail:
+  user.present:
+  - name: {{ server.user.name }}
+  - home: {{ server.user.home }}
+  - shell: /bin/false
+  - uid: {{ server.user.uid }}
+  - gid: {{ server.user.gid }}
+  - system: True
+  - groups:
+    - {{ server.user.group }}
+  - require_in:
+    - service: postfix_packages
+
+group_vmail:
+  group.present:
+    - name: {{ server.user.group }}
+    - gid: {{ server.user.gid }}
+    - system: True
+    - require_in:
+      - user: user_vmail
+{%- endif %}
+
 {%- if grains.os_family == 'Debian' %}
 
 /etc/mailname:

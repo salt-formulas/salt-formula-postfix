@@ -27,6 +27,12 @@ parameters:
           show_text: true
           text: "Return to webmail"
           link: "https://${postfix:server:myorigin}"
+      user:
+        name: vmail
+        group: vmail
+        uid: 125
+        gid: 125
+        home: ${postfix:server:mailbox_base}
       mysql:
         user: mailserver
         database: mailserver
