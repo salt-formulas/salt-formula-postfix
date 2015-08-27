@@ -4,3 +4,5 @@
         'service': 'postfix',
     },
 }, merge=salt['pillar.get']('postfix:server')) %}
+
+{% set relay = salt['pillar.get']('postfix:relay') %}

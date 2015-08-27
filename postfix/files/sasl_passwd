@@ -1,0 +1,2 @@
+{%- from "postfix/map.jinja" import relay with context %}
+{{ relay.host }}    {{ relay.sasl.user }}:{{ relay.sasl.password }}

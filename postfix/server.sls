@@ -6,6 +6,14 @@ include:
 - postfix.common
 - postfix.server.admin
 
+{%- if grains.os_family == 'Debian' %}
+
+/etc/mailname:
+  file.managed:
+  - contents: {{ server.myorigin }}
+
+{%- endif %}
+
 postfix_mysql_virtual_alias:
   file.managed:
   - name: /etc/postfix/mysql_virtual_alias_maps.cf

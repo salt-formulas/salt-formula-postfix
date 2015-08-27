@@ -1,0 +1,10 @@
+applications:
+  - postfix
+parameters:
+  postfix:
+    server:
+      enabled: false
+    relay:
+      enabled: true
+      domain: ${linux:system:domain}
+      interfaces: loopback-only

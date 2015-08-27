@@ -1,4 +1,4 @@
-{% from "postfix/map.jinja" import server with context %}
+{% from "postfix/map.jinja" import server, relay with context %}
 
 postfix_packages:
   pkg.installed:
@@ -22,11 +22,3 @@ postfix_main_config:
     - pkg: postfix_packages
   - watch_in:
     - service: postfix_service
-
-{%- if grains.os_family == 'Debian' %}
-
-/etc/mailname:
-  file.managed:
-  - contents: {{ server.myorigin }}
-
-{%- endif %}

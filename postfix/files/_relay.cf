@@ -1,0 +1,16 @@
+{%- from "postfix/map.jinja" import relay with context %}
+inet_interfaces = {{ relay.interfaces }}
+
+relayhost = {{ relay.host }}
+mydomain = {{ relay.domain }}
+myorigin = $mydomain
+remote_header_rewrite_domain = $myorigin
+
+{%- if relay.sasl is defined %}
+
+# SASL
+smtpd_sasl_auth_enable = yes
+smtp_sasl_password_maps = hash:/etc/postfix/sasl_passwd
+smtp_sasl_security_options =
+
+{%- endif %}

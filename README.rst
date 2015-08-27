@@ -11,9 +11,14 @@ Available states
     :local:
 
 ``postfix.server``
------------------------
+------------------
 
 Setup postfix server
+
+``postfix.relay``
+------------------
+
+Setup postfix relay
 
 Available metadata
 ==================
@@ -22,9 +27,14 @@ Available metadata
     :local:
 
 ``metadata.postfix.server``
----------------------------------------
+---------------------------
 
 Setup postfix server
+
+``postfix.relay``
+------------------
+
+Setup postfix relay
 
 Requirements
 ============
@@ -48,6 +58,9 @@ For complete list of parameters, please check
 
 Example reclass
 ===============
+
+Server
+------
 
 .. code-block:: yaml
 
@@ -88,6 +101,9 @@ Example reclass
 Example pillar
 ==============
 
+Server
+------
+
 Setup without postfixadmin:
 
 .. code-block:: yaml
@@ -97,6 +113,21 @@ Setup without postfixadmin:
         origin: ${_param:postfix_origin}
         admin:
           enabled: false
+
+Relay
+-----
+
+.. code-block:: yaml
+
+    postfix:
+      relay:
+        # Postfix will listen only on localhost
+        interfaces: loopback-only
+        host: mail.cloudlab.cz
+        domain: cloudlab.cz
+        sasl:
+          user: test
+          password: changeme
 
 Read more
 =========

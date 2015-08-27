@@ -36,3 +36,5 @@ parameters:
         enabled: true
         key_file: /etc/ssl/private/ssl-cert-snakeoil.key
         cert_file: /etc/ssl/certs/ssl-cert-snakeoil.pem
+    relay:
+      enabled: false
