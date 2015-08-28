@@ -20,15 +20,35 @@ readme_directory = no
 {%- include "postfix/files/_relay.cf" %}
 {%- endif %}
 
+smtpd_helo_required = yes
+smtpd_helo_restrictions =
+    permit_mynetworks,
+    reject_invalid_helo_hostname,
+    reject_non_fqdn_helo_hostname,
+    permit
+
+smtpd_sender_restrictions =
+    permit_mynetworks
+    reject_non_fqdn_sender
+    reject_unknown_sender_domain
+    permit
+
 smtpd_relay_restrictions =
     permit_mynetworks
     permit_sasl_authenticated
     defer_unauth_destination
+
 smtpd_recipient_restrictions =
+    reject_unauth_pipelining
+    reject_non_fqdn_recipient
+    reject_unknown_recipient_domain
     permit_mynetworks
     permit_sasl_authenticated
     defer_unauth_destination
     check_policy_service unix:private/policy-spf
+    permit
+
+smtpd_delay_reject = yes
 
 alias_maps = hash:/etc/aliases
 alias_database = hash:/etc/aliases
