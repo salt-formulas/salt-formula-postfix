@@ -52,3 +52,11 @@ broken_sasl_auth_clients = yes
 smtpd_sasl_type = dovecot
 smtpd_sasl_security_options = noanonymous
 smtpd_sasl_path = private/auth
+
+{%- if server.dkim.enabled %}
+# DKIM
+smtpd_milters         = inet:127.0.0.1:8891
+non_smtpd_milters     = $smtpd_milters
+milter_default_action = accept
+milter_protocol       = 2
+{%- endif %}

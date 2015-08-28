@@ -5,6 +5,7 @@
 include:
 - postfix.common
 - postfix.server.admin
+- postfix.server.dkim
 
 {%- if not salt['user.info'](server.user.name) %}
 user_vmail:

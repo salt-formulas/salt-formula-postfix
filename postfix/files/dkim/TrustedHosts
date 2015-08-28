@@ -1,0 +1,4 @@
+{%- from "postfix/map.jinja" import server with context %}{%- for host in server.dkim.trusted_hosts %}{{ host }}
+{%- endfor %}{%- if server.dkim.domains is defined %}{%- for domain in server.dkim.domains %}{{ domain.name }}
+{%- endfor %}
+{%- endif %}

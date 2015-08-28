@@ -114,6 +114,28 @@ Setup without postfixadmin:
         admin:
           enabled: false
 
+Setup DKIM:
+
+.. code-block:: yaml
+
+    postfix:
+      server:
+        dkim:
+          enabled: true
+          domains:
+            - name: example.com
+              selector: mail
+              key: |
+                super_secret_private_key
+
+First you need to generate private and public key, eg.:
+
+.. code-block:: bash
+
+     opendkim-genkey -r -s mail -d example.com
+
+And set public key in your DNS records, see `mail.txt` for public key.
+
 Relay
 -----
 

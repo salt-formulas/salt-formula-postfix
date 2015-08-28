@@ -22,11 +22,11 @@ parameters:
           webmaster: webmaster@${linux:system:domain}
         vacation:
           enabled: false
-          domain: autoreply.${postfix:server:myorigin}
+          domain: autoreply.${postfix:server:origin}
         footer:
           show_text: true
           text: "Return to webmail"
-          link: "https://${postfix:server:myorigin}"
+          link: "https://${postfix:server:origin}"
       user:
         name: vmail
         group: vmail
@@ -42,5 +42,12 @@ parameters:
         enabled: true
         key_file: /etc/ssl/private/ssl-cert-snakeoil.key
         cert_file: /etc/ssl/certs/ssl-cert-snakeoil.pem
+      dkim:
+        enabled: false
+        trusted_hosts:
+          - 127.0.0.1
+          - ::1
+          - localhost
+          - ${postfix:server:origin}
     relay:
       enabled: false
