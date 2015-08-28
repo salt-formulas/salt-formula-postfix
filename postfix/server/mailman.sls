@@ -64,6 +64,25 @@ mailman_newlist_{{ mlist.name }}:
     - require_in:
       - service: mailman_service
 
+{%- if mlist.parameters is defined %}
+mailman_{{ mlist.name }}_preferences_file:
+  file.managed:
+  - name: /var/tmp/{{ mlist.name }}_preferences
+  - source: salt://postfix/files/mailman/list_preferences
+  - mode: 600
+  - template: jinja
+  - defaults:
+      list_name: {{ mlist.name }}
+  - require:
+    - cmd: mailman_newlist_{{ mlist.name }}
+
+mailman_{{ mlist.name }}_preferences:
+  cmd.watch:
+    - name: config_list -v -i /var/tmp/{{ mlist.name }}_preferences {{ mlist.name }}
+    - watch:
+      - file: mailman_{{ mlist.name }}_preferences_file
+{%- endif %}
+
 {%- if mlist.members is defined %}
 {%- for member in mlist.members %}
 

@@ -159,6 +159,56 @@ Mailman
 It's also good idea to mount GlusterFS volume on ``/var/lib/mailman`` for
 multi-master setup.
 
+You can also set per-list parameters. For example you can setup private
+mailing list with these options:
+
+.. code-block:: yaml
+
+     lists:
+       - name: support
+         admin: test@lxc.eru
+         password: test
+         domain: lxc.eru
+         domainweb: lists.lxc.eru
+         members:
+           - test@lxc.eru
+         parameters:
+           real_name: support
+           description: "Support mailing list"
+           # Don't be advertised
+           advertised: 0
+           # Require admin to confirm subscription
+           subscribe_policy: 2
+           # Show members only to admins
+           private_roster: 2
+           # Archive only for members
+           archive_private: 1
+
+To list all available configuration options for given list, see output of
+folliwing command:
+
+.. code-block:: bash
+
+     config_list -o - <list_name>
+
+.. warning:: If you want to have list on your domain, eg. support@example.com
+   instead of support@lists.example.com, you may need to set up aliases like
+   this, depending on your setup:
+
+   ::
+
+     support-owner@example.com -> support-owner@lists.example.com
+     support-admin@example.com -> support-admin@lists.example.com
+     support-request@example.com -> support-request@lists.example.com
+     support-confirm@example.com -> support-confirm@lists.example.com
+     support-join@example.com -> support-join@lists.example.com
+     support-leave@example.com -> support-leave@lists.example.com
+     support-subscribe@example.com -> support-subscribe@lists.example.com
+     support-unsubscribe@example.com -> support-unsubscribe@lists.example.com
+     support-bounces@example.com -> support-bounces@lists.example.com
+     support@example.com -> support@lists.example.com
+
+
 Relay
 -----
 
@@ -178,3 +228,5 @@ Read more
 =========
 
 * http://doc.postfix.com/
+* http://fog.ccsf.edu/~msapiro/scripts/
+* http://wiki.list.org/DOC/Making%20Sure%20Your%20Lists%20Are%20Private

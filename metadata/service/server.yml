@@ -68,5 +68,10 @@ parameters:
             domain: ${postfix:server:origin}
             # Lists web interface hostname (eg. lists.example.com)
             domainweb: lists.${postfix:server:origin}
+            parameters:
+              advertised: 0
+              subscribe_policy: 2
+              private_roster: 2
+              archive_private: 1
     relay:
       enabled: false

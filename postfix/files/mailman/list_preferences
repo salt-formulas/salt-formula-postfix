@@ -1,0 +1,8 @@
+{%- from "postfix/map.jinja" import server with context %}
+{%- for mlist in server.mailman.lists %}
+{%- if mlist.name == list_name %}
+{%- for param, value in mlist.parameters.iteritems() %}
+{{ param }}="{{ value }}"
+{%- endfor %}
+{%- endif %}
+{%- endfor %}
