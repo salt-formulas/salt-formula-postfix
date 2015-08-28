@@ -1,6 +1,6 @@
 {% set server = salt['grains.filter_by']({
     'Debian': {
-        'pkgs': ['postfix', 'postfix-mysql'],
+        'pkgs': ['postfix', 'postfix-mysql', 'postfix-policyd-spf-python'],
         'pkgs_dkim': ['opendkim', 'opendkim-tools'],
         'service_dkim': 'opendkim',
         'service': 'postfix',

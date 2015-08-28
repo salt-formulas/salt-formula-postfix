@@ -7,6 +7,16 @@ include:
 - postfix.server.admin
 - postfix.server.dkim
 
+postfix_master_config:
+  file.managed:
+  - name: /etc/postfix/master.cf
+  - source: salt://postfix/files/master.cf
+  - template: jinja
+  - require:
+    - pkg: postfix_packages
+  - watch_in:
+    - service: postfix_service
+
 {%- if not salt['user.info'](server.user.name) %}
 user_vmail:
   user.present:

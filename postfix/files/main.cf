@@ -20,7 +20,16 @@ readme_directory = no
 {%- include "postfix/files/_relay.cf" %}
 {%- endif %}
 
-smtpd_relay_restrictions = permit_mynetworks permit_sasl_authenticated defer_unauth_destination
+smtpd_relay_restrictions =
+    permit_mynetworks
+    permit_sasl_authenticated
+    defer_unauth_destination
+smtpd_recipient_restrictions =
+    permit_mynetworks
+    permit_sasl_authenticated
+    defer_unauth_destination
+    check_policy_service unix:private/policy-spf
+
 alias_maps = hash:/etc/aliases
 alias_database = hash:/etc/aliases
 mydestination = $myhostname, localhost.localdomain, localhost
