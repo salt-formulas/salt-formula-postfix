@@ -7,6 +7,8 @@ parameters:
       myhostname: ${linux:system:name}
       myorigin: ${linux:system:name}.${linux:system:domain}
       mailbox_base: /srv/mail
+      aliases:
+        postmaster: root
       admin:
         enabled: true
         encrypt: "md5"
@@ -49,5 +51,22 @@ parameters:
           - ::1
           - localhost
           - ${postfix:server:origin}
+      mailman:
+        enabled: false
+        admin_password: changeme
+        default_domain: lists.${postfix:server:origin}
+        send_reminders: false
+        domains:
+          - lists.${postfix:server:origin}
+        lists:
+          # Default list, required by mailman itself
+          - name: mailman
+            admin: ${postfix:server:admin:email}
+            password: ${postfix:server:mailman:admin_password}
+            # Domain to which list belongs to, eg. example.com for
+            # list on mailman@example.com
+            domain: ${postfix:server:origin}
+            # Lists web interface hostname (eg. lists.example.com)
+            domainweb: lists.${postfix:server:origin}
     relay:
       enabled: false

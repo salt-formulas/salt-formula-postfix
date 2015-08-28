@@ -9,6 +9,13 @@ myorigin = {{ server.myorigin }}
 myhostname = {{ server.myhostname }}
 inet_interfaces = all
 
+{%- if server.mailman.enabled %}
+# Mailman configuration
+relay_domains = {{ server.mailman.domains|join(', ') }}
+mailman_destination_recipient_limit = 1
+transport_maps = hash:/etc/postfix/transport
+{%- endif %}
+
 {%- if server.ssl.enabled %}
 # TLS parameters
 smtpd_tls_cert_file={{ server.ssl.cert_file }}

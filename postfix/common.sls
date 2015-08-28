@@ -22,3 +22,17 @@ postfix_main_config:
     - pkg: postfix_packages
   - watch_in:
     - service: postfix_service
+
+postfix_aliases:
+  file.managed:
+  - name: /etc/aliases
+  - source: salt://postfix/files/aliases
+  - template: jinja
+  - require:
+    - pkg: postfix_packages
+
+postfix_newaliases:
+  cmd.wait:
+  - name: newaliases
+  - watch:
+    - file: postfix_aliases

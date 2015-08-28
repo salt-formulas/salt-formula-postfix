@@ -46,7 +46,7 @@ Requirements
 Optional
 --------
 
-- `glusterfs <https://github.com/tcpcloud/salt-glusterfs-formula>`_ (to serve as mail storage backend
+- `glusterfs <https://github.com/tcpcloud/salt-glusterfs-formula>`_ (to serve as mail storage backend)
 - `dovecot <https://github.com/tcpcloud/salt-dovecot-formula>`_
 - `roundcube <https://github.com/tcpcloud/salt-roundcube-formula>`_
 
@@ -114,7 +114,8 @@ Setup without postfixadmin:
         admin:
           enabled: false
 
-Setup DKIM:
+DKIM
+~~~~
 
 .. code-block:: yaml
 
@@ -135,6 +136,28 @@ First you need to generate private and public key, eg.:
      opendkim-genkey -r -s mail -d example.com
 
 And set public key in your DNS records, see `mail.txt` for public key.
+
+Mailman
+~~~~~~~
+
+.. code-block:: yaml
+
+     postfix:
+       server:
+         mailman:
+           enabled: true
+           admin_password: SaiS0kai
+           lists:
+             - name: support
+               admin: test@lxc.eru
+               password: test
+               domain: lxc.eru
+               domainweb: lists.lxc.eru
+               members:
+                 - test@lxc.eru
+
+It's also good idea to mount GlusterFS volume on ``/var/lib/mailman`` for
+multi-master setup.
 
 Relay
 -----

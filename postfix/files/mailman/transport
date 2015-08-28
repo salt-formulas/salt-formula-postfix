@@ -1,0 +1,2 @@
+{%- from "postfix/map.jinja" import server with context %}{%- for domain in server.mailman.domains %}{{ domain }}   mailman:
+{%- endfor %}
