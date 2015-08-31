@@ -5,11 +5,11 @@ Priority: optional
 Build-Depends: debhelper (>= 9)
 Standards-Version: 3.9.6
 Homepage: http://www.tcpcloud.eu
-Vcs-Browser: https://github.com/tcpcloud/salt-postfix-formula
-Vcs-Git: https://github.com/tcpcloud/salt-postfix-formula.git
+Vcs-Browser: https://github.com/tcpcloud/salt-formula-postfix
+Vcs-Git: https://github.com/tcpcloud/salt-formula-postfix.git
 
 Package: salt-formula-postfix
 Architecture: all
 Depends: ${misc:Depends}, salt-master, reclass
-Description: GlusterFS Salt formula
- Install and configure GlusterFS server and client.
+Description: Postfix Salt formula
+ Install and configure Postfix server and relay.
