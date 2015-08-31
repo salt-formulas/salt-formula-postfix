@@ -1,0 +1,2 @@
+postfix/*             /usr/share/salt-formulas/env/postfix/
+metadata/service/*      /usr/share/salt-formulas/reclass/service/postfix/
