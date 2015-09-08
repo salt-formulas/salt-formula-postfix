@@ -1,0 +1,9 @@
+{%- from "postfix/map.jinja" import server with context %}
+user = {{ server.mysql.user }}
+password = {{ server.mysql.password }}
+hosts = {{ server.mysql.host }}
+dbname = mailserver
+query = SELECT goto FROM alias,alias_domain
+  WHERE alias_domain.alias_domain = '%d'
+  AND alias.address=CONCAT('%u', '@', alias_domain.target_domain)
+  AND alias.active = 1 AND alias_domain.active = 1

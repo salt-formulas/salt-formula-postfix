@@ -41,7 +41,9 @@ virtual_mailbox_base = {{ server.mailbox_base }}
 virtual_transport = virtual
 
 # MySQL backend
-virtual_alias_maps = mysql:/etc/postfix/mysql_virtual_alias_maps.cf
+virtual_alias_maps =
+    mysql:/etc/postfix/mysql_virtual_alias_maps.cf
+    mysql:/etc/postfix/mysql_virtual_alias_domains_maps.cf
 virtual_mailbox_domains = mysql:/etc/postfix/mysql_virtual_domains_maps.cf
 virtual_mailbox_maps = mysql:/etc/postfix/mysql_virtual_mailbox_maps.cf
 #virtual_mailbox_limit_maps = mysql:/etc/postfix/mysql_virtual_mailbox_limit_maps.cf
