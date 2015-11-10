@@ -51,6 +51,8 @@ virtual_mailbox_maps =
     mysql:/etc/postfix/mysql_virtual_alias_domains_maps.cf
 #virtual_mailbox_limit_maps = mysql:/etc/postfix/mysql_virtual_mailbox_limit_maps.cf
 
+virtual_mailbox_limit = 102400000
+
 # Quota support (obsolete)
 #virtual_create_maildirsize = yes
 #virtual_mailbox_extended = yes
