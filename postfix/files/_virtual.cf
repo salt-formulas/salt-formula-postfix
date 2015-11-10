@@ -38,7 +38,12 @@ virtual_uid_maps = static:{{ server.user.uid }}
 virtual_gid_maps = static:{{ server.user.gid }}
 virtual_minimum_uid = 100
 virtual_mailbox_base = {{ server.mailbox_base }}
+
+{%- if server.get('dovecot_lmtp', False) %}
+virtual_transport = lmtp:unix:private/dovecot-lmtp
+{%- else %}
 virtual_transport = virtual
+{%- endif %}
 
 # MySQL backend
 virtual_alias_maps =
