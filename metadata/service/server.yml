@@ -4,7 +4,7 @@ parameters:
   postfix:
     server:
       enabled: true
-      myhostname: ${linux:system:name}
+      myhostname: ${linux:system:name}.${linux:system:domain}
       myorigin: ${linux:system:name}.${linux:system:domain}
       mailbox_base: /srv/mail
       aliases:
