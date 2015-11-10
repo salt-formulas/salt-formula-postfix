@@ -1,3 +1,3 @@
 {%- from "postfix/map.jinja" import server with context %}{%- if server.dkim.domains is defined %}{%- for domain in server.dkim.domains %}{{ domain.selector }}._domainkey.{{ domain.name }} {{ domain.name }}:{{ domain.selector }}:/etc/opendkim/keys/{{ domain.name }}.private
-{%- endfor %}
+{% endfor %}
 {%- endif %}
