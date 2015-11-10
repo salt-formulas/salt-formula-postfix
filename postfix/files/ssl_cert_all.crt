@@ -1,0 +1,2 @@
+{%- from "postfix/map.jinja" import server with context %}{{ server.ssl.cert }}
+{% if server.ssl.chain is defined %}{{ server.ssl.chain }}{% endif %}

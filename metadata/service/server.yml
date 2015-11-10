@@ -42,8 +42,6 @@ parameters:
         host: 127.0.0.1
       ssl:
         enabled: true
-        key_file: /etc/ssl/private/ssl-cert-snakeoil.key
-        cert_file: /etc/ssl/certs/ssl-cert-snakeoil.pem
       dkim:
         enabled: false
         trusted_hosts:

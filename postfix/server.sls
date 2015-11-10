@@ -140,4 +140,38 @@ postfix_mysql_virtual_mailbox_limit:
   - watch_in:
     - service: postfix_service
 
+{%- if server.ssl.get('enabled', False) %}
+
+/etc/postfix/ssl:
+  file.directory:
+  - user: root
+  - group: postfix
+  - mode: 750
+  - require:
+    - pkg: postfix_packages
+
+/etc/postfix/ssl/{{ server.origin }}.crt:
+  file.managed:
+  - source: salt://postfix/files/ssl_cert_all.crt
+  - user: root
+  - group: postfix
+  - mode: 640
+  - require:
+    - file: /etc/postfix/ssl
+  - watch_in:
+    - service: postfix_service
+
+/etc/postfix/ssl/{{ server.origin }}.key:
+  file.managed:
+  - contents_pillar: postfix:server:ssl:key
+  - user: root
+  - group: postfix
+  - mode: 640
+  - require:
+    - file: /etc/postfix/ssl
+  - watch_in:
+    - service: postfix_service
+
+{%- endif %}
+
 {%- endif %}
