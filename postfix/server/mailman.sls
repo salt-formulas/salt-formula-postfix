@@ -18,6 +18,7 @@ mailman_apache_conf:
   file.managed:
   - name: /etc/apache2/conf-available/mailman.conf
   - source: salt://postfix/files/mailman/apache.conf
+  - template: jinja
 
 mailman_apache_conf_enable:
   cmd.run:
