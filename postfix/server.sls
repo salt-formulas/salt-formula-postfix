@@ -153,6 +153,7 @@ postfix_mysql_virtual_mailbox_limit:
 /etc/postfix/ssl/{{ server.origin }}.crt:
   file.managed:
   - source: salt://postfix/files/ssl_cert_all.crt
+  - template: jinja
   - user: root
   - group: postfix
   - mode: 640
