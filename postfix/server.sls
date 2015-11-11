@@ -7,6 +7,7 @@ include:
 - postfix.server.admin
 - postfix.server.dkim
 - postfix.server.mailman
+- postfix.server.amavis
 
 postfix_master_config:
   file.managed:

@@ -60,3 +60,7 @@ mydestination = $myhostname, localhost.localdomain, localhost
 mailbox_size_limit = 0
 recipient_delimiter = +
 inet_protocols = all
+
+{%- if server.amavis.enabled %}
+content_filter = amavisfeed:[127.0.0.1]:10024
+{%- endif %}

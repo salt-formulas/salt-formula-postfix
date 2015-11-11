@@ -72,5 +72,8 @@ parameters:
               subscribe_policy: 2
               private_roster: 2
               archive_private: 1
+      amavis:
+        enabled: false
+        processes: 2
     relay:
       enabled: false
