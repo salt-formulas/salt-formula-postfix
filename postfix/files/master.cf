@@ -44,7 +44,7 @@ mailman   unix  -       n       n       -       -       pipe
 #  -o smtpd_relay_restrictions=permit_sasl_authenticated,reject
 #  -o milter_macro_daemon_name=ORIGINATING
 #628       inet  n       -       -       -       -       qmqpd
-pickup    unix  n       -       -       60      1       pickuP
+pickup    unix  n       -       -       60      1       pickup
 {%- if server.amavis.enabled %}
       -o content_filter=
       -o receive_override_options=no_header_body_checks

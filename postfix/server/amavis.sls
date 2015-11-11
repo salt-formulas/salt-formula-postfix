@@ -12,6 +12,18 @@ amavis_service:
     - require:
       - pkg: amavis_packages
 
+clamav_service:
+  service.running:
+    - name: {{ server.service_clamav }}
+    - require:
+      - pkg: amavis_packages
+
+freshclam_service:
+  service.running:
+    - name: {{ server.service_freshclam }}
+    - require:
+      - pkg: amavis_packages
+
 group_amavis:
   group.present:
     - name: amavis
