@@ -4,7 +4,7 @@
 
 amavis_packages:
   pkg.installed:
-    - name: {{ server.pkgs_amavis }}
+    - names: {{ server.pkgs_amavis }}
 
 amavis_service:
   service.running:
