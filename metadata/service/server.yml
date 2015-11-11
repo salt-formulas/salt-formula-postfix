@@ -75,5 +75,15 @@ parameters:
       amavis:
         enabled: false
         processes: 2
+        virus_destiny: D_DISCARD
+        banned_destiny: D_PASS
+        spam_destiny: D_PASS
+        bad_header_destiny: D_PASS
+        spamassassin:
+          subject_tag: '[SPAM]'
+          tag_level: '2.0'
+          tag2_level: '6.31'
+          kill_level: '6.31'
+          dsn_cutoff_level: '10'
     relay:
       enabled: false

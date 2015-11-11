@@ -13,4 +13,21 @@ use strict;
 
 $max_servers = {{ server.amavis.processes }};
 
+$final_virus_destiny      = {{ server.amavis.virus_destiny }}; # (defaults to D_BOUNCE)
+$final_banned_destiny     = {{ server.amavis.banned_destiny }};  # (defaults to D_BOUNCE)
+$final_spam_destiny       = {{ server.amavis.spam_destiny }};  # (defaults to D_REJECT)
+$final_bad_header_destiny = {{ server.amavis.bad_header_destiny }};  # (defaults to D_PASS), D_BOUNCE suggested
+
+@lookup_sql_dsn = (
+    ['DBI:mysql:database=mailserver;host={{ server.mysql.host }};port=3306',
+     '{{ server.mysql.user }}',
+     '{{ server.mysql.password }}']);
+$sql_select_policy = 'SELECT domain FROM domain WHERE CONCAT("@",domain) IN (%k) AND active = "1"';
+
+$sa_spam_subject_tag = '{{ server.amavis.spamassassin.subject_tag }} ';
+$sa_tag_level_deflt  = {{ server.amavis.spamassassin.tag_level }};  # add spam info headers if at, or above that level
+$sa_tag2_level_deflt = {{ server.amavis.spamassassin.tag2_level }}; # add 'spam detected' headers at that level
+$sa_kill_level_deflt = {{ server.amavis.spamassassin.kill_level }}; # triggers spam evasive actions
+$sa_dsn_cutoff_level = {{ server.amavis.spamassassin.dsn_cutoff_level }};   # spam level beyond which a DSN is not sent
+
 1;  # ensure a defined return
