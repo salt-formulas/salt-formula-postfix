@@ -1,9 +1,9 @@
-{%- from "postfix/map.jinja" import relay with context %}
+{%- from "postfix/map.jinja" import server, relay with context %}
 inet_interfaces = {{ relay.interfaces }}
 mynetworks_style = host
 
 relayhost = {{ relay.host }}
-myorigin = {{ relay.myorigin }}
+myorigin = {{ server.myorigin }}
 remote_header_rewrite_domain = $myorigin
 
 {%- if relay.sasl is defined %}
