@@ -4,6 +4,7 @@ mynetworks_style = host
 
 relayhost = {{ relay.host }}
 myorigin = {{ server.myorigin }}
+myhostname = $myorigin
 remote_header_rewrite_domain = $myorigin
 
 {%- if relay.sasl is defined %}
