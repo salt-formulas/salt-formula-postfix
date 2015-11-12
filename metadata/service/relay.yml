@@ -5,6 +5,10 @@ parameters:
     server:
       enabled: false
       myorigin: ${linux:system:name}.${linux:system:domain}
+      amavis:
+        enabled: false
+      mailman:
+        enabled: false
     relay:
       enabled: true
       domain: ${linux:system:domain}
