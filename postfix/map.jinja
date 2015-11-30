@@ -15,3 +15,4 @@
 }, merge=salt['pillar.get']('postfix:server')) %}
 
 {% set relay = salt['pillar.get']('postfix:relay') %}
+{% set backupmx = salt['pillar.get']('postfix:backupmx') %}

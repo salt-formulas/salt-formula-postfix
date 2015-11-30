@@ -1,0 +1,18 @@
+applications:
+  - postfix
+parameters:
+  postfix:
+    server:
+      enabled: false
+      myhostname: ${linux:system:name}.${linux:system:domain}
+      myorigin: ${linux:system:name}.${linux:system:domain}
+      amavis:
+        enabled: false
+      mailman:
+        enabled: false
+    relay:
+      enabled: false
+    backupmx:
+      enabled: true
+      queue:
+        lifetime: 5d

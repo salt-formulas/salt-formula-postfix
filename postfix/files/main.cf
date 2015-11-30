@@ -20,6 +20,10 @@ readme_directory = no
 {%- include "postfix/files/_relay.cf" %}
 {%- endif %}
 
+{%- if backupmx.enabled %}
+{%- include "postfix/files/_backupmx.cf" %}
+{%- endif %}
+
 smtpd_helo_required = yes
 smtpd_helo_restrictions =
     permit_mynetworks,

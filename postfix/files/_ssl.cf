@@ -1,0 +1,20 @@
+{%- from "postfix/map.jinja" import server with context %}
+
+{%- if server.ssl.enabled %}
+
+# TLS parameters
+smtpd_tls_cert_file=/etc/postfix/ssl/{{ server.origin }}.crt
+smtpd_tls_key_file=/etc/postfix/ssl/{{ server.origin }}.key
+smtpd_use_tls=yes
+smtpd_tls_session_cache_database = btree:${data_directory}/smtpd_scache
+smtp_tls_session_cache_database = btree:${data_directory}/smtp_scache
+
+smtpd_tls_mandatory_protocols = !SSLv2,!SSLv3
+smtp_tls_mandatory_protocols = !SSLv2,!SSLv3
+smtpd_tls_protocols = !SSLv2,!SSLv3
+smtp_tls_protocols = !SSLv2,!SSLv3
+
+# See /usr/share/doc/postfix/TLS_README.gz in the postfix-doc package for
+# information on enabling SSL in the smtp client.
+
+{%- endif %}

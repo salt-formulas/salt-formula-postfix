@@ -5,3 +5,6 @@ include:
 {%- if pillar.postfix.relay is defined %}
 - postfix.relay
 {%- endif %}
+{%- if pillar.postfix.backupmx is defined %}
+- postfix.backupmx
+{%- endif %}

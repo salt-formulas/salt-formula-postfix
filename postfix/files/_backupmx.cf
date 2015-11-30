@@ -1,0 +1,17 @@
+{%- from "postfix/map.jinja" import server,backupmx with context %}
+
+# Debian specific:  Specifying a file name will cause the first
+# line of that file to be used as the name.  The Debian default
+# is /etc/mailname.
+#myorigin = /etc/mailname
+myorigin = {{ server.myorigin }}
+
+myhostname = {{ server.myhostname }}
+inet_interfaces = all
+
+maximal_queue_lifetime = {{ backupmx.queue.lifetime }}
+
+relay_recipient_maps =
+relay_domains = {% if backupmx.domains is defined %}{{ backupmx.domains|join(', ') }}{% endif %}
+
+{%- include "postfix/files/_ssl.cf" %}
