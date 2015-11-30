@@ -9,16 +9,6 @@ include:
 - postfix.server.mailman
 - postfix.server.amavis
 
-postfix_master_config:
-  file.managed:
-  - name: /etc/postfix/master.cf
-  - source: salt://postfix/files/master.cf
-  - template: jinja
-  - require:
-    - pkg: postfix_packages
-  - watch_in:
-    - service: postfix_service
-
 {%- if not salt['user.info'](server.user.name) %}
 user_vmail:
   user.present:
@@ -40,14 +30,6 @@ group_vmail:
     - system: True
     - require_in:
       - user: user_vmail
-{%- endif %}
-
-{%- if grains.os_family == 'Debian' %}
-
-/etc/mailname:
-  file.managed:
-  - contents: {{ server.myorigin }}
-
 {%- endif %}
 
 postfix_mysql_virtual_alias:
@@ -140,40 +122,5 @@ postfix_mysql_virtual_mailbox_limit:
     - pkg: postfix_packages
   - watch_in:
     - service: postfix_service
-
-{%- if server.ssl.get('enabled', False) %}
-
-/etc/postfix/ssl:
-  file.directory:
-  - user: root
-  - group: postfix
-  - mode: 750
-  - require:
-    - pkg: postfix_packages
-
-/etc/postfix/ssl/{{ server.origin }}.crt:
-  file.managed:
-  - source: salt://postfix/files/ssl_cert_all.crt
-  - template: jinja
-  - user: root
-  - group: postfix
-  - mode: 640
-  - require:
-    - file: /etc/postfix/ssl
-  - watch_in:
-    - service: postfix_service
-
-/etc/postfix/ssl/{{ server.origin }}.key:
-  file.managed:
-  - contents_pillar: postfix:server:ssl:key
-  - user: root
-  - group: postfix
-  - mode: 640
-  - require:
-    - file: /etc/postfix/ssl
-  - watch_in:
-    - service: postfix_service
-
-{%- endif %}
 
 {%- endif %}
