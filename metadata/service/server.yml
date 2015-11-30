@@ -87,3 +87,5 @@ parameters:
           dsn_cutoff_level: '10'
     relay:
       enabled: false
+    backupmx:
+      enabled: false

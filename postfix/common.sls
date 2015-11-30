@@ -55,7 +55,7 @@ postfix_newaliases:
 
 {%- endif %}
 
-{%- if server.ssl.get('enabled', False) %}
+{%- if server.get('ssl', {}).get('enabled', False) %}
 
 /etc/postfix/ssl:
   file.directory:

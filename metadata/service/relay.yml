@@ -15,3 +15,5 @@ parameters:
       interfaces: loopback-only
       aliases:
         postmaster: root
+    backupmx:
+      enabled: false
