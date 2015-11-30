@@ -20,6 +20,11 @@ Setup postfix server
 
 Setup postfix relay
 
+``postfix.backupmx``
+------------------
+
+Setup postfix backup MX
+
 Available metadata
 ==================
 
@@ -35,6 +40,11 @@ Setup postfix server
 ------------------
 
 Setup postfix relay
+
+``postfix.backupmx``
+------------------
+
+Setup postfix backup MX
 
 Requirements
 ============
@@ -73,6 +83,13 @@ Server
     postfix:
       server:
         origin: ${_param:postfix_origin}
+        ssl:
+          enabled: true
+          key: ${_secret:ssl_domain_wild_key}
+          cert: ${_secret:ssl_domain_wild_cert}
+          chain: ${_secret:ssl_domain_wild_chain}
+          # Set smtpd_tls_security_level to encrypt and require TLS encryption
+          required: true
     mysql:
       server:
         database:
@@ -223,6 +240,17 @@ Relay
         sasl:
           user: test
           password: changeme
+
+Backup MX
+---------
+
+.. code-block:: yaml
+
+    postfix:
+      backupmx:
+        domains:
+          - cloudlab.cz
+          - lists.cloudlab.cz
 
 Read more
 =========

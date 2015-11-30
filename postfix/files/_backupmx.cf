@@ -8,6 +8,7 @@ myorigin = {{ server.myorigin }}
 
 myhostname = {{ server.myhostname }}
 inet_interfaces = all
+mynetworks_style = host
 
 maximal_queue_lifetime = {{ backupmx.queue.lifetime }}
 
