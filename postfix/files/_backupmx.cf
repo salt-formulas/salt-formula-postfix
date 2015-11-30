@@ -1,4 +1,4 @@
-{%- from "postfix/map.jinja" import server,backupmx with context %}
+{%- from "postfix/map.jinja" import server, backupmx with context %}
 
 # Debian specific:  Specifying a file name will cause the first
 # line of that file to be used as the name.  The Debian default
