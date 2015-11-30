@@ -10,6 +10,9 @@ myhostname = {{ server.myhostname }}
 inet_interfaces = all
 mynetworks_style = host
 
+# No local delivery, everything is relayed
+mydestination =
+
 maximal_queue_lifetime = {{ backupmx.queue.lifetime }}
 
 relay_recipient_maps =

@@ -8,6 +8,7 @@ myorigin = {{ server.myorigin }}
 
 myhostname = {{ server.myhostname }}
 inet_interfaces = all
+mydestination = $myhostname, localhost.localdomain, localhost
 
 {%- if server.mailman.enabled %}
 # Mailman configuration

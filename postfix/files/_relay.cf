@@ -7,6 +7,9 @@ myorigin = {{ server.myorigin }}
 myhostname = $myorigin
 remote_header_rewrite_domain = $myorigin
 
+# No local delivery, everything is relayed
+mydestination =
+
 {%- if relay.sasl is defined %}
 
 # SASL
