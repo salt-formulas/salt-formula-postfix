@@ -9,6 +9,7 @@ myorigin = {{ server.myorigin }}
 myhostname = {{ server.myhostname }}
 inet_interfaces = all
 mynetworks_style = host
+virtual_alias_maps = $alias_maps
 
 # No local delivery, everything is relayed
 mydestination =
