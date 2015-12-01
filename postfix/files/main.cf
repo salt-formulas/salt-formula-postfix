@@ -27,12 +27,14 @@ readme_directory = no
 smtpd_helo_required = yes
 smtpd_helo_restrictions =
     permit_mynetworks,
+    permit_sasl_authenticated
     reject_invalid_helo_hostname,
     reject_non_fqdn_helo_hostname,
     permit
 
 smtpd_sender_restrictions =
     permit_mynetworks
+    permit_sasl_authenticated
     reject_non_fqdn_sender
     reject_unknown_sender_domain
     permit
