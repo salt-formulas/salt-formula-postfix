@@ -64,6 +64,9 @@ mailbox_size_limit = 0
 recipient_delimiter = +
 inet_protocols = all
 
+# This stops some techniques used to harvest email addresses
+disable_vrfy_command = yes
+
 {%- if server.amavis.enabled %}
 content_filter = amavisfeed:[127.0.0.1]:10024
 {%- endif %}
