@@ -164,6 +164,7 @@ Mailman
          mailman:
            enabled: true
            admin_password: SaiS0kai
+           distributed: true
            lists:
              - name: support
                admin: test@lxc.eru
@@ -174,7 +175,8 @@ Mailman
                  - test@lxc.eru
 
 It's also good idea to mount GlusterFS volume on ``/var/lib/mailman`` for
-multi-master setup.
+multi-master setup. In that case distributed has to be true to bind-mount
+qfiles directory which must not be shared.
 
 You can also set per-list parameters. For example you can setup private
 mailing list with these options:

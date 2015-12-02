@@ -55,6 +55,28 @@ mailman_transport_postmap:
     - watch:
       - file: mailman_transport
 
+{%- if server.mailman.get('distributed', False) %}
+mailman_var_spool:
+  file.directory:
+    - name: /var/spool/mailman
+    - mode: 2775
+    - owner: list
+    - group: list
+    - require:
+      - pkg: mailman_packages
+
+mailman_qfiles_bind:
+  mount.mounted:
+    - name: /var/lib/mailman/qfiles
+    - device: /var/spool/mailman
+    - fstype: none
+    - opts: bind
+    - require:
+      - file: mailman_var_spool
+    - watch_in:
+      - service: mailman_service
+{%- endif %}
+
 {%- for mlist in server.mailman.lists %}
 mailman_newlist_{{ mlist.name }}:
   cmd.run:
