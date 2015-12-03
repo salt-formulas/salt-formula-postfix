@@ -165,6 +165,7 @@ Mailman
            enabled: true
            admin_password: SaiS0kai
            distributed: true
+           use_https: false
            lists:
              - name: support
                admin: test@lxc.eru
@@ -177,6 +178,13 @@ Mailman
 It's also good idea to mount GlusterFS volume on ``/var/lib/mailman`` for
 multi-master setup. In that case distributed has to be true to bind-mount
 qfiles directory which must not be shared.
+
+Parameter ``use_https`` needs to be set before setting up any lists, otherwise
+you need to fix lists urls manually using:
+
+.. code-block:: bash
+
+    withlist -l -a -r fix_url
 
 You can also set per-list parameters. For example you can setup private
 mailing list with these options:

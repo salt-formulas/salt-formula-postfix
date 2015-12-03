@@ -55,6 +55,7 @@ parameters:
         admin_password: changeme
         default_domain: lists.${postfix:server:origin}
         send_reminders: false
+        use_https: false
         domains:
           - lists.${postfix:server:origin}
         lists:
