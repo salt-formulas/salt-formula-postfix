@@ -57,7 +57,7 @@ MAILMAN_SITE_LIST = 'mailman'
 #-------------------------------------------------------------
 # If you change these, you have to configure your http server
 # accordingly (Alias and ScriptAlias directives in most httpds)
-{%- if server.use_https %}
+{%- if server.mailman.use_https %}
 DEFAULT_URL_PATTERN = 'https://%s/mailman/'
 PUBLIC_ARCHIVE_URL = 'https://%(hostname)s/pipermail/%(listname)s/'
 {%- else %}
