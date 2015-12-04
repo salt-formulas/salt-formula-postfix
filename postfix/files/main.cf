@@ -69,6 +69,10 @@ inet_protocols = all
 # This stops some techniques used to harvest email addresses
 disable_vrfy_command = yes
 
+# Increase limit for people who thinks that sending
+# attachments via email is OK
+message_size_limit = {{ server.message_size_limit }}
+
 {%- if server.amavis.enabled %}
 content_filter = amavisfeed:[127.0.0.1]:10024
 {%- endif %}

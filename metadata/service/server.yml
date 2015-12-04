@@ -8,6 +8,7 @@ parameters:
       myorigin: ${linux:system:name}.${linux:system:domain}
       mailbox_base: /srv/mail
       dovecot_lmtp: true
+      message_size_limit: 25000000
       aliases:
         postmaster: root
       admin:

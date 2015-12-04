@@ -5,6 +5,7 @@ parameters:
     server:
       enabled: false
       myorigin: ${linux:system:name}.${linux:system:domain}
+      message_size_limit: 25000000
       amavis:
         enabled: false
       mailman:
