@@ -7,7 +7,10 @@ parameters:
       myhostname: ${linux:system:name}.${linux:system:domain}
       myorigin: ${linux:system:name}.${linux:system:domain}
       mailbox_base: /srv/mail
-      dovecot_lmtp: true
+      dovecot_lmtp:
+        enabled: true
+        type: unix
+        address: private/dovecot-lmtp
       message_size_limit: 25000000
       aliases:
         postmaster: root

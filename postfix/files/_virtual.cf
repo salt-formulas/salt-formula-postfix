@@ -26,7 +26,7 @@ virtual_minimum_uid = 100
 virtual_mailbox_base = {{ server.mailbox_base }}
 
 {%- if server.get('dovecot_lmtp', False) %}
-virtual_transport = lmtp:unix:private/dovecot-lmtp
+virtual_transport = lmtp:{{ server.dovecot_lmtp.type }}:{{ server.dovecot_lmtp.address }}
 {%- else %}
 virtual_transport = virtual
 {%- endif %}
