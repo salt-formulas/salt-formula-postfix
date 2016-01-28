@@ -47,9 +47,9 @@ smtpd_relay_restrictions =
 smtpd_recipient_restrictions =
     reject_unauth_pipelining
     reject_non_fqdn_recipient
-    reject_non_fqdn_sender
     permit_mynetworks
     permit_sasl_authenticated
+    reject_non_fqdn_sender
     reject_unauth_destination
     reject_invalid_hostname
     reject_unknown_sender_domain
