@@ -4,8 +4,8 @@ parameters:
   postfix:
     server:
       enabled: false
-      myhostname: ${linux:system:name}.${linux:system:domain}
       myorigin: ${linux:system:name}.${linux:system:domain}
+      myhostname: ${postfix:server:myorigin}
       message_size_limit: 25000000
       amavis:
         enabled: false

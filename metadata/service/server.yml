@@ -6,8 +6,8 @@ parameters:
   postfix:
     server:
       enabled: true
-      myhostname: ${linux:system:name}.${linux:system:domain}
       myorigin: ${linux:system:name}.${linux:system:domain}
+      myhostname: ${postfix:server:myorigin}
       mailbox_base: /srv/mail
       dovecot_lmtp:
         enabled: true
@@ -22,13 +22,13 @@ parameters:
         url: "/admin"
         # Default password is changeme, and this is what you should do
         setup_password: 'dcae0c85ae2ec6ed7922a98d96a4f891:34de2e58483b2e6df1eb984e030ba7a405dfa1d0'
-        email: postmaster@${linux:system:domain}
+        email: postmaster@${postfix:server:origin}
         default_aliases:
-          root: root@${linux:system:domain}
-          abuse: abuse@${linux:system:domain}
-          hostmaster: hostmaster@${linux:system:domain}
-          postmaster: postmaster@${linux:system:domain}
-          webmaster: webmaster@${linux:system:domain}
+          root: root@${postfix:server:origin}
+          abuse: abuse@${postfix:server:origin}
+          hostmaster: hostmaster@${postfix:server:origin}
+          postmaster: postmaster@${postfix:server:origin}
+          webmaster: webmaster@${postfix:server:origin}
         vacation:
           enabled: false
           domain: autoreply.${postfix:server:origin}
