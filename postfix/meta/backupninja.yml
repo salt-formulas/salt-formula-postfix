@@ -1,0 +1,6 @@
+{%- from "postfix/map.jinja" import server with context -%}
+backup:
+  aptly:
+    fs_includes:
+    - {{ server.mailbox_base }}
+    fs_excludes: []
