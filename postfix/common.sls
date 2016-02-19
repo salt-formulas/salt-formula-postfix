@@ -12,6 +12,59 @@ postfix_service:
     - require:
       - file: postfix_main_config
 
+postfix_chroot_etc:
+  file.directory:
+    - name: /var/spool/postfix/etc
+    - require:
+      - pkg: postfix_packages
+
+postfix_chroot_etc_certs:
+  file.directory:
+    - name: /var/spool/postfix/etc/ssl/certs
+    - makedirs: true
+    - require:
+      - pkg: postfix_packages
+
+/var/spool/postfix/etc/services:
+  file.managed:
+    - source: /etc/services
+    - require:
+      - file: postfix_chroot_etc
+    - watch_in:
+      - service: postfix_service
+
+/var/spool/postfix/etc/resolv.conf:
+  file.managed:
+    - source: /etc/resolv.conf
+    - require:
+      - file: postfix_chroot_etc
+    - watch_in:
+      - service: postfix_service
+
+/var/spool/postfix/etc/nsswitch.conf:
+  file.managed:
+    - source: /etc/nsswitch.conf
+    - require:
+      - file: postfix_chroot_etc
+    - watch_in:
+      - service: postfix_service
+
+/var/spool/postfix/etc/hosts:
+  file.managed:
+    - source: /etc/hosts
+    - require:
+      - file: postfix_chroot_etc
+    - watch_in:
+      - service: postfix_service
+
+/var/spool/postfix/etc/localtime:
+  file.managed:
+    - source: /etc/localtime
+    - require:
+      - file: postfix_chroot_etc
+    - watch_in:
+      - service: postfix_service
+
 postfix_main_config:
   file.managed:
   - name: /etc/postfix/main.cf
