@@ -21,45 +21,51 @@ postfix_chroot_etc:
 postfix_chroot_etc_certs:
   file.directory:
     - name: /var/spool/postfix/etc/ssl/certs
+    - preserve: true
     - makedirs: true
     - require:
       - pkg: postfix_packages
 
 /var/spool/postfix/etc/services:
-  file.managed:
+  file.copy:
     - source: /etc/services
+    - preserve: true
     - require:
       - file: postfix_chroot_etc
     - watch_in:
       - service: postfix_service
 
 /var/spool/postfix/etc/resolv.conf:
-  file.managed:
+  file.copy:
     - source: /etc/resolv.conf
+    - preserve: true
     - require:
       - file: postfix_chroot_etc
     - watch_in:
       - service: postfix_service
 
 /var/spool/postfix/etc/nsswitch.conf:
-  file.managed:
+  file.copy:
     - source: /etc/nsswitch.conf
+    - preserve: true
     - require:
       - file: postfix_chroot_etc
     - watch_in:
       - service: postfix_service
 
 /var/spool/postfix/etc/hosts:
-  file.managed:
+  file.copy:
     - source: /etc/hosts
+    - preserve: true
     - require:
       - file: postfix_chroot_etc
     - watch_in:
       - service: postfix_service
 
 /var/spool/postfix/etc/localtime:
-  file.managed:
+  file.copy:
     - source: /etc/localtime
+    - preserve: true
     - require:
       - file: postfix_chroot_etc
     - watch_in:
