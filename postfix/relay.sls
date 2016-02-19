@@ -19,7 +19,7 @@ postfix_sasl_passwd:
     - cmd: postfix_sasl_postmap
 
 postfix_sasl_postmap:
-  cmd.run:
+  cmd.wait:
   - name: postmap hash:/etc/postfix/sasl_passwd
   - refreshonly: true
   - require:
