@@ -12,64 +12,19 @@ postfix_service:
     - require:
       - file: postfix_main_config
 
-postfix_chroot_etc:
-  file.directory:
-    - name: /var/spool/postfix/etc
-    - require:
-      - pkg: postfix_packages
+{%- for chroot_file in server.chroot_files %}
 
-postfix_chroot_etc_certs:
-  file.directory:
-    - name: /var/spool/postfix/etc/ssl/certs
+/var/spool/postfix/{{ chroot_file }}:
+  file.copy:
+    - source: {{ chroot_file }}
     - preserve: true
     - makedirs: true
+    - watch_in:
+      - service: postfix_service
     - require:
       - pkg: postfix_packages
 
-/var/spool/postfix/etc/services:
-  file.copy:
-    - source: /etc/services
-    - preserve: true
-    - require:
-      - file: postfix_chroot_etc
-    - watch_in:
-      - service: postfix_service
-
-/var/spool/postfix/etc/resolv.conf:
-  file.copy:
-    - source: /etc/resolv.conf
-    - preserve: true
-    - require:
-      - file: postfix_chroot_etc
-    - watch_in:
-      - service: postfix_service
-
-/var/spool/postfix/etc/nsswitch.conf:
-  file.copy:
-    - source: /etc/nsswitch.conf
-    - preserve: true
-    - require:
-      - file: postfix_chroot_etc
-    - watch_in:
-      - service: postfix_service
-
-/var/spool/postfix/etc/hosts:
-  file.copy:
-    - source: /etc/hosts
-    - preserve: true
-    - require:
-      - file: postfix_chroot_etc
-    - watch_in:
-      - service: postfix_service
-
-/var/spool/postfix/etc/localtime:
-  file.copy:
-    - source: /etc/localtime
-    - preserve: true
-    - require:
-      - file: postfix_chroot_etc
-    - watch_in:
-      - service: postfix_service
+{%- endfor %}
 
 postfix_main_config:
   file.managed:

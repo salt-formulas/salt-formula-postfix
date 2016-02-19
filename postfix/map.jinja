@@ -11,6 +11,11 @@
         'service_freshclam': 'clamav-freshclam',
         'service_dkim': 'opendkim',
         'service': 'postfix',
+        'chroot_files': [
+            '/etc/services', '/etc/resolv.conf', '/etc/nsswitch.conf',
+            '/etc/hosts', '/etc/localtime',
+            '/etc/ssl/certs/ca-certificates.crt',
+        ],
     },
     'RedHat': {
         'pkgs': ['postfix', 'pypolicyd-spf'],
@@ -24,6 +29,11 @@
         'service_freshclam': 'clamav-freshclam',
         'service_dkim': 'opendkim',
         'service': 'postfix',
+        'chroot_files': [
+            '/etc/services', '/etc/resolv.conf', '/etc/nsswitch.conf',
+            '/etc/hosts', '/etc/localtime', '/etc/ssl/certs/ca-bundle.crt',
+            '/etc/ssl/certs/ca-bundle.trust.crt',
+        ],
     },
 }, merge=salt['pillar.get']('postfix:server')) %}
 
