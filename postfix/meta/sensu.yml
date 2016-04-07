@@ -1,8 +1,14 @@
 {%- from "postfix/map.jinja" import server with context -%}
 check:
-  remote_smtp_server:
-    command: "PATH=$PATH:/etc/sensu/plugins check-smtp.rb -h {{ server.myorigin }} {% if server.get('ssl', {}).get('enabled', False) %} --tls {% endif %} "
+  remote_smtp_server_{{ grains['fqdn'] }}:
+    command: "PATH=$PATH:/etc/sensu/plugins check-smtp.rb -h {{ server.myorigin }} {% if server.get('ssl', {}).get('enabled', False) %} --tls {% endif %}"
     interval: 60
     occurrences: 1
     subscribers:
     - remote-network
+  local_postfix_server_smtpd_proc:
+    command: "PATH=$PATH:/usr/lib64/nagios/plugins:/usr/lib/nagios/plugins check_procs -C smtpd -u postfix -c 1:10"
+    interval: 60
+    occurrences: 1
+    subscribers:
+    - local-postfix-server
