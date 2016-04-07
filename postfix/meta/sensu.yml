@@ -14,7 +14,7 @@ check:
     - local-postfix-server
   {%- if server.get('amavis', {}).get('enabled', False) %}
   local_postfix_server_amavis_proc_{{ grains['fqdn'] }}:
-    command: "PATH=$PATH:/usr/lib64/nagios/plugins:/usr/lib/nagios/plugins check_procs -C smtpd -u amavisd-new -c 7"
+    command: "PATH=$PATH:/usr/lib64/nagios/plugins:/usr/lib/nagios/plugins check_procs -C amavisd-new -u amavis -c 7"
     interval: 60
     occurrences: 1
     subscribers:
