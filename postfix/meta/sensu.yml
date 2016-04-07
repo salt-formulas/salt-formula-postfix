@@ -1,7 +1,6 @@
-{%- set address =  grains.ipv4[0] %}
 check:
-  remote_imap_server:
-    command: "PATH=$PATH:/etc/sensu/plugins check-smtp.rb -h {{ address }} --tls"
+  remote_smtp_server:
+    command: "PATH=$PATH:/etc/sensu/plugins check-smtp.rb -h {{ server.myorigin }} --tls"
     interval: 60
     occurrences: 1
     subscribers:
