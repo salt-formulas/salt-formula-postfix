@@ -8,8 +8,8 @@ check:
     - remote-network
   local_postfix_server_smtpd_proc:
     command: "PATH=$PATH:/usr/lib64/nagios/plugins:/usr/lib/nagios/plugins check_procs -C smtpd -u postfix -c 1:10"
-    interval: 60
-    occurrences: 1
+    interval: 30
+    occurrences: 3
     subscribers:
     - local-postfix-server
   {%- if server.get('amavis', {}).get('enabled', False) %}
