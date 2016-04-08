@@ -7,7 +7,7 @@ check:
     subscribers:
     - remote-network
   local_postfix_server_smtpd_proc:
-    command: "PATH=$PATH:/usr/lib64/nagios/plugins:/usr/lib/nagios/plugins check_procs -C smtpd -u postfix -c 1:10"
+    command: "PATH=$PATH:/usr/lib64/nagios/plugins:/usr/lib/nagios/plugins check_procs -C smtpd -u postfix -c 1:100"
     interval: 30
     occurrences: 3
     subscribers:
