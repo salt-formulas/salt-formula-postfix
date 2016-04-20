@@ -1,29 +1,37 @@
-{%- from "postfix/map.jinja" import server with context -%}
+{%- from "postfix/map.jinja" import server, backupmx with context -%}
 check:
+  {%- if server.enabled or backupmx.enabled %}
   remote_smtp_server_{{ server.myorigin }}:
     command: "PATH=$PATH:/etc/sensu/plugins check-smtp.rb -h {{ server.myorigin }} {% if server.get('ssl', {}).get('enabled', False) %} --tls {% endif %}"
     interval: 30
     occurrences: 3
     subscribers:
     - remote-network
+  {%- endif %}
   local_postfix_server_master_proc:
     command: "PATH=$PATH:/usr/lib64/nagios/plugins:/usr/lib/nagios/plugins check_procs -a postfix/master -u root -c 1"
     interval: 30
     occurrences: 3
     subscribers:
     - local-postfix-server
+    - local-postfix-relay
+    - local-postfix-backupmx
   local_postfix_server_qmgr_proc:
     command: "PATH=$PATH:/usr/lib64/nagios/plugins:/usr/lib/nagios/plugins check_procs -C qmgr -u postfix -c 1"
     interval: 30
     occurrences: 3
     subscribers:
     - local-postfix-server
+    - local-postfix-relay
+    - local-postfix-backupmx
   local_postfix_server_pickup_proc:
     command: "PATH=$PATH:/usr/lib64/nagios/plugins:/usr/lib/nagios/plugins check_procs -C pickup -u postfix -c 1"
     interval: 30
     occurrences: 3
     subscribers:
     - local-postfix-server
+    - local-postfix-relay
+    - local-postfix-backupmx
   {%- if server.get('amavis', {}).get('enabled', False) %}
   local_postfix_server_amavis_proc_{{ grains['fqdn'] }}:
     command: "PATH=$PATH:/usr/lib64/nagios/plugins:/usr/lib/nagios/plugins check_procs -a amavisd-new -u amavis -c 1:"
