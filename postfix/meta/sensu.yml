@@ -6,25 +6,51 @@ check:
     occurrences: 3
     subscribers:
     - remote-network
-  local_postfix_server_smtpd_proc:
-    command: "PATH=$PATH:/usr/lib64/nagios/plugins:/usr/lib/nagios/plugins check_procs -C smtpd -u postfix -c 1:100"
+  local_postfix_server_master_proc:
+    command: "PATH=$PATH:/usr/lib64/nagios/plugins:/usr/lib/nagios/plugins check_procs -a postfix/master -u root -c 1"
+    interval: 30
+    occurrences: 3
+    subscribers:
+    - local-postfix-server
+  local_postfix_server_qmgr_proc:
+    command: "PATH=$PATH:/usr/lib64/nagios/plugins:/usr/lib/nagios/plugins check_procs -C qmgr -u postfix -c 1"
+    interval: 30
+    occurrences: 3
+    subscribers:
+    - local-postfix-server
+  local_postfix_server_pickup_proc:
+    command: "PATH=$PATH:/usr/lib64/nagios/plugins:/usr/lib/nagios/plugins check_procs -C pickup -u postfix -c 1"
     interval: 30
     occurrences: 3
     subscribers:
     - local-postfix-server
   {%- if server.get('amavis', {}).get('enabled', False) %}
   local_postfix_server_amavis_proc_{{ grains['fqdn'] }}:
-    command: "PATH=$PATH:/usr/lib64/nagios/plugins:/usr/lib/nagios/plugins check_procs -C amavisd-new -u amavis -c 7"
-    interval: 60
-    occurrences: 1
+    command: "PATH=$PATH:/usr/lib64/nagios/plugins:/usr/lib/nagios/plugins check_procs -C amavisd-new -u amavis -c 1:"
+    interval: 30
+    occurrences: 3
     subscribers:
     - {{ grains['fqdn']|replace('.', '-') }}
   {%- endif %}
   {%- if server.get('dkim', {}).get('enabled', False) %}
   local_postfix_server_opendkim_proc_{{ grains['fqdn'] }}:
-    command: "PATH=$PATH:/usr/lib64/nagios/plugins:/usr/lib/nagios/plugins check_procs -C opendkim -u opendkim -c 1"
-    interval: 60
-    occurrences: 1
+    command: "PATH=$PATH:/usr/lib64/nagios/plugins:/usr/lib/nagios/plugins check_procs -C opendkim -u opendkim -c 1:"
+    interval: 30
+    occurrences: 3
+    subscribers:
+    - {{ grains['fqdn']|replace('.', '-') }}
+  {%- endif %}
+  {%- if server.get('mailman', {}).get('enabled', False) %}
+  local_postfix_server_mailman_proc_{{ grains['fqdn'] }}:
+    command: "PATH=$PATH:/usr/lib64/nagios/plugins:/usr/lib/nagios/plugins check_procs -C mailmanctl -u list -c 1:"
+    interval: 30
+    occurrences: 3
+    subscribers:
+    - {{ grains['fqdn']|replace('.', '-') }}
+  local_postfix_server_mailman_qrunner_proc_{{ grains['fqdn'] }}:
+    command: "PATH=$PATH:/usr/lib64/nagios/plugins:/usr/lib/nagios/plugins check_procs -a bin/qrunner -u list -c 1:"
+    interval: 30
+    occurrences: 3
     subscribers:
     - {{ grains['fqdn']|replace('.', '-') }}
   {%- endif %}
