@@ -14,7 +14,7 @@ driver:
 
 provisioner:
   salt_version: latest
-  salt_install: apt
+  salt_install: bootstrap
   name: salt_solo
   formula: postfix
   log_level: info
