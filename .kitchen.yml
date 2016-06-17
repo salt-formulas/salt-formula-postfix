@@ -1,0 +1,86 @@
+# vim: ft=yaml
+---
+driver:
+  name: vagrant
+  customize:
+    memory: 1024
+  vm_hostname: postfix.ci.local
+  # EXAMPLE, to download custom dependencies
+  #pre_create_command: cp test/install_deps.sh {{vagrant_root}}/ && chmod +x ./*.sh && ./install_deps.sh
+  #pre_create_command: test ./tests/install_deps.sh
+  #synced_folders:
+      #- ["data/%{instance_name}", "/opt/instance_data"]
+      #- ["/host_path", "/vm_path", "create: true, type: :nfs"]
+
+provisioner:
+  salt_version: latest
+  salt_install: apt
+  name: salt_solo
+  formula: postfix
+  log_level: info
+  state_top:
+    base:
+      "*":
+        - postfix
+  # EXAMPLE, BY DEFAULT LOAD PILARS FOR FROM THIS
+  # FILIP, I DONT UNDERSTAND WHy under Top.sls/base (it reffers the postifx.sls tests/pillar/server.sls below)
+  pillars:
+    top.sls:
+      base:
+        "*":
+          - postfix
+
+
+platforms:
+  #- name: bento/ubuntu-14.04
+  - name: bento/ubuntu-16.04
+#  - name: bento/debian-jessie
+#  - name: bento/centos-7.1
+
+suites:
+
+  - name: server
+    provisioner:
+      #salt_pillar_root: /data/pillar
+      #data_path: ../external-pillar-root/
+      pillars-from-files:
+        postfix.sls: tests/pillar/server.sls
+      # EXAMPLE TO OVERRIDE PILARS ON SUITE
+      pillars:
+        top.sls:
+          base:
+            "*":
+              - postfix
+      # EXAMPLE TO ADD CUSTOM VALUES FOR TEST
+        postfix.sls:
+          server:
+            ssl:
+              enable: false
+
+  - name: relay
+    provisioner:
+      pillars-from-files:
+        postfix.sls: tests/pillar/relay.sls
+      pilars:
+        postfix.sls:
+          server:
+            ssl:
+              enable: false
+
+  - name: backupmx
+    provisioner:
+      pillars-from-files:
+        postfix.sls: tests/pillar/backupmx.sls
+      # EXAMPLE TO AD ALTERNATIVE TOP STATE
+      #state_top:
+        #base:
+          #'*':
+            #- postfix.backup-test
+
+  #- name: use-development-branch-salt
+    #provisioner:
+      #salt_bootstrap_options: -M -N git develop
+
+  #- name: use-top-from-disk
+    #provisioner:
+      #state_top_from_file: true
