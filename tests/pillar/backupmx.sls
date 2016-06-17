@@ -16,6 +16,8 @@ postfix:
       abuse: root
       security: root
       root: root@local
+    ssl:
+      enabled: false
   relay:
     enabled: false
   backupmx:
