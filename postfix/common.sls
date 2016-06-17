@@ -72,7 +72,7 @@ postfix_newaliases:
   - watch:
     - file: postfix_aliases
   - require:
-    - file.directory: /var/lib/mailman/data
+    - file: /var/lib/mailman/data
 
 {%- if grains.os_family == 'Debian' %}
 
