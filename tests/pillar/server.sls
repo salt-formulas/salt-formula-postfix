@@ -50,7 +50,7 @@ postfix:
       password: password
       host: 127.0.0.1
     ssl:
-      enabled: true
+      enabled: false
     dkim:
       enabled: false
       trusted_hosts:
