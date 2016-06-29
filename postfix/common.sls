@@ -55,24 +55,11 @@ postfix_aliases:
   - require:
     - pkg: postfix_packages
 
-/var/lib/mailman/data:
-  file.directory:
-  - makedirs: True
-  - user: list
-  - group: list
-  - mode: 770
-
-/var/lib/mailman/data/aliases:
-  file.symlink:
-  - target: /etc/aliases
-
 postfix_newaliases:
   cmd.wait:
   - name: newaliases
   - watch:
     - file: postfix_aliases
-  - require:
-    - file: /var/lib/mailman/data
 
 {%- if grains.os_family == 'Debian' %}
 
