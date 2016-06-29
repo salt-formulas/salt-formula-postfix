@@ -33,14 +33,12 @@ provisioner:
 
 
 verifier:
-  #name: serverspec
   test_base_root: tests
 
 
 platforms:
   - name: bento/ubuntu-14.04
 #  - name: bento/ubuntu-16.04
-#  - name: bento/debian-jessie
 #  - name: bento/centos-7.1
 
 suites:
@@ -49,23 +47,14 @@ suites:
     provisioner:
       pillars-from-files:
         postfix.sls: tests/pillar/server.sls
-      #pillars:
-        #top.sls:
-        #postfix.sls:
 
   - name: relay
     provisioner:
       pillars-from-files:
         postfix.sls: tests/pillar/relay.sls
-      #pillars:
-        #top.sls:
-        #postfix.sls:
 
   - name: backupmx
     provisioner:
       pillars-from-files:
         postfix.sls: tests/pillar/backupmx.sls
 
-  #- name: use-development-branch-salt
-    #provisioner:
-      #salt_bootstrap_options: -M -N git develop
