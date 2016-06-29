@@ -1,0 +1,60 @@
+# vim: ft=yaml
+---
+driver:
+  name: vagrant
+  customize:
+    memory: 512
+  vm_hostname: postfix.ci.local
+
+driver_config:
+  require_chef_omnibus: false
+
+provisioner:
+  name: salt_solo
+  # As of 2016/06 http://bootstrap.saltstack.org do not handle ubuntu 16.04.
+  salt_bootstrap_url: https://raw.githubusercontent.com/saltstack/salt-bootstrap/develop/bootstrap-salt.sh
+  salt_install: bootstrap
+  salt_version: latest
+  formula: postfix
+  log_level: info
+  state_top:
+    base:
+      "*":
+        - postfix
+  pillars:
+    top.sls:
+      base:
+        "*":
+          - postfix
+    postfix.sls:
+      server:
+        ssl:
+          enable: false
+
+
+verifier:
+  test_base_root: tests
+
+
+platforms:
+  - name: bento/ubuntu-14.04
+#  - name: bento/ubuntu-16.04
+#  - name: bento/centos-7.1
+
+suites:
+
+  - name: server
+    provisioner:
+      pillars-from-files:
+        postfix.sls: tests/pillar/server.sls
+
+  - name: relay
+    provisioner:
+      pillars-from-files:
+        postfix.sls: tests/pillar/relay.sls
+
+  - name: backupmx
+    provisioner:
+      pillars-from-files:
+        postfix.sls: tests/pillar/backupmx.sls
+

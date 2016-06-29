@@ -17,20 +17,20 @@ postfix:
       mailer-daemon: root
       abuse: root
       security: root
-      root: root@local
+      root: root@mx01.local
     admin:
       enabled: true
       encrypt: "md5"
       url: "/admin"
       # Default password is changeme, and this is what you should do
       setup_password: 'dcae0c85ae2ec6ed7922a98d96a4f891:34de2e58483b2e6df1eb984e030ba7a405dfa1d0'
-      email: postmaster@local
+      email: postmaster@mx01.local
       default_aliases:
-        root: root@local
-        abuse: abuse@local
-        hostmaster: hostmaster@local
-        postmaster: postmaster@local
-        webmaster: webmaster@local
+        root: root@mx01.local
+        abuse: abuse@mx01.local
+        hostmaster: hostmaster@mx01.local
+        postmaster: postmaster@mx01.local
+        webmaster: webmaster@mx01.local
       vacation:
         enabled: false
         domain: autoreply.mx01.local
@@ -50,7 +50,7 @@ postfix:
       password: password
       host: 127.0.0.1
     ssl:
-      enabled: true
+      enabled: false
     dkim:
       enabled: false
       trusted_hosts:
@@ -69,7 +69,7 @@ postfix:
       lists:
         # Default list, required by mailman itself
         - name: mailman
-          admin: root@local
+          admin: root@mx01.local
           password: password
           # Domain to which list belongs to, eg. example.com for
           # list on mailman@example.com

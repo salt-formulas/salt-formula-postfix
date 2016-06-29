@@ -16,6 +16,8 @@ postfix:
       abuse: root
       security: root
       root: root@local
+    ssl:
+      enabled: false
   relay:
     enabled: true
     # Relayhost is resolved by MX records of cloudlab.cz
@@ -30,5 +32,6 @@ postfix:
       abuse: root
       security: root
       root: root@tcpcloud.eu
+    interfaces: all
   backupmx:
     enabled: false

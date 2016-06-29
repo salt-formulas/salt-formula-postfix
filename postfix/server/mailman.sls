@@ -6,6 +6,15 @@ mailman_packages:
   pkg.installed:
     - name: mailman
 
+mailman_aliases:
+  file.managed:
+    - name: /var/lib/mailman/data/aliases
+    - group: list
+    - require:
+      - pkg: mailman_packages
+    - require_in:
+      - cmd: postfix_newaliases
+
 mailman_service:
   service.running:
     - name: mailman
