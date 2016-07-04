@@ -64,7 +64,7 @@ Configuration parameters
 ========================
 
 For complete list of parameters, please check
-``metadata/service/server.yml``
+``metadata/service/server.yml```
 
 Example reclass
 ===============
@@ -270,15 +270,17 @@ Development and test workflow with `Test Kitchen <http://kitchen.ci>`_ and
 `kitchen-salt <https://github.com/simonmcc/kitchen-salt>`_ provisioner plugin.
 
 Test Kitchen is a test harness tool to execute your configured code on one or more platforms in isolation.
-There is a `.kitchen.yml` in main folder that defines *platforms* to be tested and *suites* to execute on them.
+There is a ``.kitchen.yml`` in main folder that defines *platforms* to be tested and *suites* to execute on them.
 
 Kitchen CI can spin instances locally or remote, based on used *driver*.
-For local development `.kitchen.yml` defines a `vagrant <https://github.com/test-kitchen/kitchen-vagrant>`_ driver.
+For local development ``.kitchen.yml`` defines a `vagrant <https://github.com/test-kitchen/kitchen-vagrant>`_ driver.
 To use Docker or other backend driver follow the section `Continuous Integration`_.
 
 A listing of scenarios to be executed:
 
-::
+
+.. code-block:: shell
+
   $ kitchen list
 
   Instance                    Driver   Provisioner  Verifier  Transport  Last Action
@@ -305,9 +307,9 @@ Continuous Integration
 
 We uses a Jenkins to spin a kitchen instances in Docker or OpenStack environment.
 
-If you would like to repeat, than you may use `.kitchen.<backend>.yml` configuration yaml in the main folder
-to override `.kitchen.yml` at some points.
-Usage: `KITCHEN_LOCAL_YAML=.kitchen.docker.yml kitchen verify server-ubuntu-1404`.
+If you would like to repeat, than you may use ``.kitchen.<backend>.yml`` configuration yaml in the main folder
+to override ``.kitchen.yml`` at some points.
+Usage: ``KITCHEN_LOCAL_YAML=.kitchen.docker.yml kitchen verify server-ubuntu-1404``.
 
 Be aware of fundamental differences of backends. The formula verification scripts are primarily tested with
 Vagrant driver.
@@ -315,10 +317,10 @@ Vagrant driver.
 
 CI performs following (Kitchen Test) actions on each instance:
 
-  1. *create*, provision an test instance
-  2. *converge*, run a provisioner
-  3. *verify*, run a verification
-  4. *destroy*
+1. *create*, provision an test instance
+2. *converge*, run a provisioner
+3. *verify*, run a verification
+4. *destroy*
 
 
 Test Kitchen
@@ -370,8 +372,8 @@ An example steps than might be:
   # install test kitchen
   gem install test-kitchen
 
-An optional `Gemfile` in the main folder may contain Ruby dependencies to be required for Test Kitchen workflow.
-To install them you have to install first `gem install bundler` and then run `bundler install`.
+An optional ``Gemfile`` in the main folder may contain Ruby dependencies to be required for Test Kitchen workflow.
+To install them you have to install first ``gem install bundler`` and then run ``bundler install``.
 
 Read more
 =========
