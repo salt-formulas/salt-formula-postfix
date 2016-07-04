@@ -7,10 +7,15 @@ postfix_packages:
       service: postfix_service
 
 postfix_service:
+{%- if not grains.get('noservices', False) %}
   service.running:
     - name: {{ server.service }}
     - require:
       - file: postfix_main_config
+{%- else %}
+  service.disabled:
+    - name: {{ server.service }}
+{%- endif %}
 
 {%- for chroot_file in server.chroot_files %}
 

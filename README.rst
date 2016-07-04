@@ -262,6 +262,117 @@ Backup MX
           - cloudlab.cz
           - lists.cloudlab.cz
 
+
+Development and testing
+=======================
+
+Development and test workflow with `Test Kitchen <http://kitchen.ci>`_ and
+`kitchen-salt <https://github.com/simonmcc/kitchen-salt>`_ provisioner plugin.
+
+Test Kitchen is a test harness tool to execute your configured code on one or more platforms in isolation.
+There is a `.kitchen.yml` in main folder that defines *platforms* to be tested and *suites* to execute on them.
+
+Kitchen CI can spin instances locally or remote, based on used *driver*.
+For local development `.kitchen.yml` defines a `vagrant <https://github.com/test-kitchen/kitchen-vagrant>`_ driver.
+To use Docker or other backend driver follow the section `Continuous Integration`_.
+
+A listing of scenarios to be executed:
+
+::
+  $ kitchen list
+
+  Instance                    Driver   Provisioner  Verifier  Transport  Last Action
+
+  server-bento-ubuntu-1404    Vagrant  SaltSolo     Busser    Ssh        <Not Created>
+  server-bento-ubuntu-1604    Vagrant  SaltSolo     Busser    Ssh        Created
+  server-bento-centos-71      Vagrant  SaltSolo     Busser    Ssh        <Not Created>
+  relay-bento-ubuntu-1404     Vagrant  SaltSolo     Busser    Ssh        <Not Created>
+  relay-bento-ubuntu-1604     Vagrant  SaltSolo     Busser    Ssh        <Not Created>
+  relay-bento-centos-71       Vagrant  SaltSolo     Busser    Ssh        <Not Created>
+  backupmx-bento-ubuntu-1404  Vagrant  SaltSolo     Busser    Ssh        <Not Created>
+  backupmx-bento-ubuntu-1604  Vagrant  SaltSolo     Busser    Ssh        <Not Created>
+  backupmx-bento-centos-71    Vagrant  SaltSolo     Busser    Ssh        <Not Created>
+
+
+The `Busser <https://github.com/test-kitchen/busser>`_ *Verifier* is used to setup and run tests
+implementated in `<repo>/test/integration`. It installs the particular driver to tested instance
+(`Serverspec <https://github.com/neillturner/kitchen-verifier-serverspec>`_,
+`InSpec <https://github.com/chef/kitchen-inspec>`_, Shell, Bats, ...) prior the verification is executed.
+
+
+Continuous Integration
+----------------------
+
+We uses a Jenkins to spin a kitchen instances in Docker or OpenStack environment.
+
+If you would like to repeat, than you may use `.kitchen.<backend>.yml` configuration yaml in the main folder
+to override `.kitchen.yml` at some points.
+Usage: `KITCHEN_LOCAL_YAML=.kitchen.docker.yml kitchen verify server-ubuntu-1404`.
+
+Be aware of fundamental differences of backends. The formula verification scripts are primarily tested with
+Vagrant driver.
+
+
+CI performs following (Kitchen Test) actions on each instance:
+
+  1. *create*, provision an test instance
+  2. *converge*, run a provisioner
+  3. *verify*, run a verification
+  4. *destroy*
+
+
+Test Kitchen
+------------
+
+
+To install Test Kitchen is as simple as:
+
+.. code-block:: shell
+
+  gem install test-kitchen
+
+  # install additional kitchen plugins if needed
+  gem install kitchen-docker kitchen-openstack kitchen-inspec busser-serverspec
+
+  kitchen init
+  kitchen list
+  kitchen test
+
+of course you have to have installed Ruby and it's package manager `gem <https://rubygems.org/>`_ first.
+
+One may be satisfied installing it system-wide right from OS package manager,
+however for the sake of complex environments you may use `rbenv <https://github.com/rbenv/rbenv>`_ for user side ruby installation.
+
+ * https://github.com/rbenv/rbenv
+ * http://kitchen.ci/docs/getting-started/installing
+
+An example steps than might be:
+
+.. code-block:: shell
+
+  # get rbenv
+  git clone https://github.com/rbenv/rbenv.git ~/.rbenv
+
+  # configure
+  cd ~/.rbenv && src/configure && make -C src     # don't worry if it fails
+  echo 'export PATH="$HOME/.rbenv/bin:$PATH"'     >> ~/.bash_profile
+  cd ~/.rbenv; git fetch
+
+  # list all available versions:
+  rbenv install -l
+
+  #install a Ruby version:
+  rbenv install 2.0.0-p247
+
+  # activate
+  rbenv local 2.0.0-p247
+
+  # install test kitchen
+  gem install test-kitchen
+
+An optional `Gemfile` in the main folder may contain Ruby dependencies to be required for Test Kitchen workflow.
+To install them you have to install first `gem install bundler` and then run `bundler install`.
+
 Read more
 =========
 
