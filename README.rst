@@ -64,7 +64,7 @@ Configuration parameters
 ========================
 
 For complete list of parameters, please check
-``metadata/service/server.yml```
+``metadata/service/server.yml``
 
 Example reclass
 ===============
