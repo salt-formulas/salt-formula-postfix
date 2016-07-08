@@ -302,6 +302,17 @@ implementated in `<repo>/test/integration`. It installs the particular driver to
 `InSpec <https://github.com/chef/kitchen-inspec>`_, Shell, Bats, ...) prior the verification is executed.
 
 
+Usage:
+
+.. code-block:: shell
+
+  # manually
+  kitchen [test || [create|converge|verify|exec|login|destroy|...]] -t tests/integration
+
+  # or with provided Makefile within CI pipeline
+  make kitchen
+
+
 Continuous Integration
 ----------------------
 
@@ -309,7 +320,7 @@ We uses a Jenkins to spin a kitchen instances in Docker or OpenStack environment
 
 If you would like to repeat, than you may use ``.kitchen.<backend>.yml`` configuration yaml in the main folder
 to override ``.kitchen.yml`` at some points.
-Usage: ``KITCHEN_LOCAL_YAML=.kitchen.docker.yml kitchen verify server-ubuntu-1404``.
+Usage: ``KITCHEN_LOCAL_YAML=.kitchen.docker.yml kitchen verify server-ubuntu-1404 -t tests/integration``.
 
 Be aware of fundamental differences of backends. The formula verification scripts are primarily tested with
 Vagrant driver.
@@ -317,9 +328,9 @@ Vagrant driver.
 
 CI performs following (Kitchen Test) actions on each instance:
 
-1. *create*, provision an test instance
-2. *converge*, run a provisioner
-3. *verify*, run a verification
+1. *create*, provision an test instance and wait until executed salt bootstrap script finish (pkg install, etc.).
+2. *converge*, run a provisioner (shell script or kitchen-salt)
+3. *verify*, run a verification (inspec, other may be added)
 4. *destroy*
 
 
