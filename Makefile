@@ -2,7 +2,17 @@ DESTDIR=/
 SALTENVDIR=/usr/share/salt-formulas/env
 RECLASSDIR=/usr/share/salt-formulas/reclass
 FORMULANAME=$(shell grep name: metadata.yml|head -1|cut -d : -f 2|grep -Eo '[a-z0-9\-]*')
+
+MAKE_PID := $(shell echo $$PPID)
+JOB_FLAG := $(filter -j%, $(subst -j ,-j,$(shell ps T | grep "^\s*$(MAKE_PID).*$(MAKE)")))
+JOBS     := $(subst -j,,$(JOB_FLAG))
+
 KITCHEN_LOCAL_YAML?=.kitchen.yml
+KITCHEN_OPTS?="--concurrency=$(JOBS)"
+KITCHEN_OPTS_CREATE?=""
+KITCHEN_OPTS_CONVERGE?=""
+KITCHEN_OPTS_VERIFY?=""
+KITCHEN_OPTS_TEST?=""
 
 all:
 	@echo "make install - Install into DESTDIR"
@@ -26,19 +36,19 @@ test:
 kitchen: kitchen-create kitchen-converge kitchen-verify kitchen-list
 
 kitchen-create:
-	kitchen create
+	kitchen create ${KITCHEN_OPTS} ${KITCHEN_OPTS_CREATE}
 	[ "$(shell echo $(KITCHEN_LOCAL_YAML)|grep -Eo docker)" = "docker" ] || sleep 120
 
 kitchen-converge:
-	kitchen converge
+	kitchen converge ${KITCHEN_OPTS} ${KITCHEN_OPTS_CONVERGE}
 
 kitchen-verify:
-	[ ! -d tests/integration ] || kitchen verify -t tests/integration
-	[ -d tests/integration ]   || kitchen verify
+	[ ! -d tests/integration ] || kitchen verify -t tests/integration ${KITCHEN_OPTS} ${KITCHEN_OPTS_VERIFY}
+	[ -d tests/integration ]   || kitchen verify ${KITCHEN_OPTS} ${KITCHEN_OPTS_VERIFY}
 
 kitchen-test:
-	[ ! -d tests/integration ] || kitchen test -t tests/integration
-	[ -d tests/integration ]   || kitchen test
+	[ ! -d tests/integration ] || kitchen test -t tests/integration ${KITCHEN_OPTS} ${KITCHEN_OPTS_TEST}
+	[ -d tests/integration ]   || kitchen test ${KITCHEN_OPTS} ${KITCHEN_OPTS_TEST}
 
 kitchen-list:
 	kitchen list
