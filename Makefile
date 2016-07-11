@@ -43,8 +43,5 @@ kitchen-list:
 
 clean:
 	[ ! -x "$(shell which kitchen)" ] || kitchen destroy
-
-clean:
-	[ ! -x "$(shell which kitchen)" ] || kitchen destroy
 	[ ! -d tests/build ] || rm -rf tests/build
 	[ ! -d build ] || rm -rf build
