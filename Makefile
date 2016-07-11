@@ -2,10 +2,12 @@ DESTDIR=/
 SALTENVDIR=/usr/share/salt-formulas/env
 RECLASSDIR=/usr/share/salt-formulas/reclass
 FORMULANAME=$(shell grep name: metadata.yml|head -1|cut -d : -f 2|grep -Eo '[a-z0-9\-]*')
+KITCHEN_LOCAL_YAML?=.kitchen.yml
 
 all:
 	@echo "make install - Install into DESTDIR"
 	@echo "make test    - Run tests"
+	@echo "make kitchen - Run Kitchen CI tests (create, converge, verify)"
 	@echo "make clean   - Cleanup after tests run"
 
 install:
@@ -21,6 +23,28 @@ install:
 test:
 	[ ! -d tests ] || (cd tests; ./run_tests.sh)
 
+kitchen-create:
+	kitchen create
+	[ "$(shell echo $(KITCHEN_LOCAL_YAML)|grep -Eo docker)" = "docker" ] || sleep 120
+
+kitchen-converge:
+	kitchen converge
+
+kitchen-verify:
+	[ ! -d tests/integration ] || kitchen verify -t tests/integration
+	[ -d tests/integration ]   || kitchen verify
+
+kitchen-test:
+	[ ! -d tests/integration ] || kitchen test -t tests/integration
+	[ -d tests/integration ]   || kitchen test
+
+kitchen-list:
+	kitchen list
+
 clean:
+	[ ! -x "$(shell which kitchen)" ] || kitchen destroy
+
+clean:
+	[ ! -x "$(shell which kitchen)" ] || kitchen destroy
 	[ ! -d tests/build ] || rm -rf tests/build
 	[ ! -d build ] || rm -rf build
