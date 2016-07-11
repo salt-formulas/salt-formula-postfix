@@ -60,5 +60,6 @@ kitchen-list:
 
 clean:
 	[ ! -x "$(shell which kitchen)" ] || kitchen destroy
+	[ ! -d .kitchen ] || rm -rf .kitchen
 	[ ! -d tests/build ] || rm -rf tests/build
 	[ ! -d build ] || rm -rf build
