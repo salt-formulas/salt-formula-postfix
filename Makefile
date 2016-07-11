@@ -5,7 +5,12 @@ FORMULANAME=$(shell grep name: metadata.yml|head -1|cut -d : -f 2|grep -Eo '[a-z
 
 MAKE_PID := $(shell echo $$PPID)
 JOB_FLAG := $(filter -j%, $(subst -j ,-j,$(shell ps T | grep "^\s*$(MAKE_PID).*$(MAKE)")))
-JOBS     := $(subst -j,,$(JOB_FLAG))
+
+ifneq ($(subst -j,,$(JOB_FLAG)),)
+JOBS := $(subst -j,,$(JOB_FLAG))
+else
+JOBS := 1
+endif
 
 KITCHEN_LOCAL_YAML?=.kitchen.yml
 KITCHEN_OPTS?="--concurrency=$(JOBS)"
