@@ -23,6 +23,8 @@ install:
 test:
 	[ ! -d tests ] || (cd tests; ./run_tests.sh)
 
+kitchen: kitchen-create kitchen-converge kitchen-verify kitchen-list
+
 kitchen-create:
 	kitchen create
 	[ "$(shell echo $(KITCHEN_LOCAL_YAML)|grep -Eo docker)" = "docker" ] || sleep 120
