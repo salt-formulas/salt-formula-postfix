@@ -27,7 +27,7 @@ provisioner:
     postfix.sls:
       server:
         ssl:
-          enable: false
+          enabled: false
 
 platforms:
   - name: bento/ubuntu-14.04
