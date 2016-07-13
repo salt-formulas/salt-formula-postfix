@@ -10,11 +10,13 @@ postfix_service:
 {%- if not grains.get('noservices', False) %}
   service.running:
     - name: {{ server.service }}
+    - enable: true
     - require:
       - file: postfix_main_config
 {%- else %}
   service.disabled:
     - name: {{ server.service }}
+    - enable: false
 {%- endif %}
 
 {%- for chroot_file in server.chroot_files %}

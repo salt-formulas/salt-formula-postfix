@@ -19,6 +19,7 @@ mailman_service:
 {%- if not grains.get('noservices', False) %}
   service.running:
     - name: mailman
+    - enable: true
     - require:
       - pkg: mailman_packages
 {%- else %}

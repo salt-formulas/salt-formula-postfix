@@ -10,33 +10,39 @@ amavis_service:
 {%- if not grains.get('noservices', False) %}
   service.running:
     - name: {{ server.service_amavis }}
+    - enable: true
     - require:
       - pkg: amavis_packages
 {% else %}
   service.disabled:
     - name: {{ server.service_amavis }}
+    - enable: false
 {% endif %}
 
 clamav_service:
 {%- if not grains.get('noservices', False) %}
   service.running:
     - name: {{ server.service_clamav }}
+    - enable: true
     - require:
       - pkg: amavis_packages
 {% else %}
   service.disabled:
     - name: {{ server.service_clamav }}
+    - enable: false
 {% endif %}
 
 freshclam_service:
 {%- if not grains.get('noservices', False) %}
   service.running:
     - name: {{ server.service_freshclam }}
+    - enable: true
     - require:
       - pkg: amavis_packages
 {% else %}
   service.disabled:
     - name: {{ server.service_freshclam }}
+    - enable: false
 {% endif %}
 
 group_amavis:

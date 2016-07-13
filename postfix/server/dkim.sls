@@ -35,6 +35,7 @@ dkim_keys_dir:
 dkim_service:
   service.running:
   - name: {{ server.service_dkim }}
+  - enable: true
   - require:
     - file: dkim_config
 
