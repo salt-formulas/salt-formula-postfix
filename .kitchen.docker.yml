@@ -5,7 +5,9 @@ driver:
   use_sudo: false
 
 provisioner:
-  salt_bootstrap_url: https://raw.githubusercontent.com/epcim/salt-bootstrap/add-apt-transport-https-ubuntu/bootstrap-salt.sh
+  salt_install: bootstrap
+  salt_bootstrap_url: https://bootstrap.saltstack.com
+  salt_version: latest
   grains:
     noservices: True
 
