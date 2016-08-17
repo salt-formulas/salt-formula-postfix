@@ -1,7 +1,7 @@
 DESTDIR=/
 SALTENVDIR=/usr/share/salt-formulas/env
 RECLASSDIR=/usr/share/salt-formulas/reclass
-FORMULANAME=$(shell grep name: metadata.yml|head -1|cut -d : -f 2|grep -Eo '[a-z0-9\-]*')
+FORMULANAME=$(shell grep name: metadata.yml|head -1|cut -d : -f 2|grep -Eo '[a-z0-9\-\_]*')
 
 MAKE_PID := $(shell echo $$PPID)
 JOB_FLAG := $(filter -j%, $(subst -j ,-j,$(shell ps T | grep "^\s*$(MAKE_PID).*$(MAKE)")))
@@ -45,6 +45,7 @@ kitchen-create:
 	[ "$(shell echo $(KITCHEN_LOCAL_YAML)|grep -Eo docker)" = "docker" ] || sleep 120
 
 kitchen-converge:
+	kitchen converge ${KITCHEN_OPTS} ${KITCHEN_OPTS_CONVERGE} &&\
 	kitchen converge ${KITCHEN_OPTS} ${KITCHEN_OPTS_CONVERGE}
 
 kitchen-verify:
