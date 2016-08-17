@@ -25,11 +25,11 @@ platforms:
       image_ref: <%= ENV['OS_UBUNTU_IMAGE_REF'] || 'ubuntu-14-04-x64-1455869035' %>
       flavor_ref: m1.medium
       network_ref:
-        <% if ENV['OS_NETWORK_REF'] -%>
+        <% if ENV['OS_NETWORK_REF'] %>
         - <% ENV['OS_NETWORK_REF'] %>
-        <% else -%>
+        <% else %>
         - ci-net
-        <% end -%>
+        <% end %>
     # force update apt cache on the image
     run_list:
       - recipe[apt]
