@@ -11,6 +11,7 @@ provisioner:
   salt_install: bootstrap
   salt_bootstrap_url: https://bootstrap.saltstack.com
   salt_version: latest
+  require_chef_for_busser: false
   formula: postfix
   log_level: info
   state_top:
