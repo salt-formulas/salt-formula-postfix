@@ -14,9 +14,11 @@ amavis_service:
     - require:
       - pkg: amavis_packages
 {% else %}
-  service.disabled:
+  service.dead:
     - name: {{ server.service_amavis }}
     - enable: false
+    - require:
+      - pkg: amavis_packages
 {% endif %}
 
 clamav_service:
@@ -27,9 +29,11 @@ clamav_service:
     - require:
       - pkg: amavis_packages
 {% else %}
-  service.disabled:
+  service.dead:
     - name: {{ server.service_clamav }}
     - enable: false
+    - require:
+      - pkg: amavis_packages
 {% endif %}
 
 freshclam_service:
@@ -40,9 +44,11 @@ freshclam_service:
     - require:
       - pkg: amavis_packages
 {% else %}
-  service.disabled:
+  service.dead:
     - name: {{ server.service_freshclam }}
     - enable: false
+    - require:
+      - pkg: amavis_packages
 {% endif %}
 
 group_amavis:

@@ -14,9 +14,11 @@ postfix_service:
     - require:
       - file: postfix_main_config
 {%- else %}
-  service.disabled:
+  service.dead:
     - name: {{ server.service }}
     - enable: false
+    - require:
+      - file: postfix_main_config
 {%- endif %}
 
 {%- for chroot_file in server.chroot_files %}

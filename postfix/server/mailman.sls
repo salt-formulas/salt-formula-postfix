@@ -23,8 +23,11 @@ mailman_service:
     - require:
       - pkg: mailman_packages
 {%- else %}
-  service.disabled:
+  service.dead:
     - name: mailman
+    - enable: false
+    - require:
+      - pkg: mailman_packages
 {%- endif %}
 
 # This should be imho setup this way by mailman package itself in the
