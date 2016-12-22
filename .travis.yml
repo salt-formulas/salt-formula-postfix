@@ -1,0 +1,36 @@
+language: ruby
+
+rvm:
+  - 2.2.4
+
+dist: trusty
+sudo: required
+
+bundler_args: --without='vagrant'
+
+git:
+  submodules: false
+
+before_install:
+  # init/start docker in travis
+  - source <(curl -sL https://raw.githubusercontent.com/zuazo/kitchen-in-travis/master/scripts/start_docker.sh)
+  - gem install test-kitchen
+  - gem install kitchen-docker
+
+
+install:
+# BOOTSTRAP
+  - export KITCHEN_LOCAL_YAML=.kitchen.docker.yml
+  - kitchen list
+
+script:
+  - export KITCHEN_LOCAL_YAML=.kitchen.docker.yml
+  - bundle exec kitchen converge -l debug
+
+after_script:
+  - bundle exec kitchen list
+
+after_failure: 
+  - cat docker_daemon.log
+
+
