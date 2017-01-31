@@ -80,6 +80,7 @@ postfix_newaliases:
 
 {%- if server.get('ssl', {}).get('enabled', False) %}
 
+{%- if server.ssl.key is defined %}
 /etc/postfix/ssl:
   file.directory:
   - user: root
@@ -110,5 +111,6 @@ postfix_newaliases:
     - file: /etc/postfix/ssl
   - watch_in:
     - service: postfix_service
+{%- endif %}
 
 {%- endif %}

@@ -3,8 +3,14 @@
 {%- if server.ssl.enabled %}
 
 # SMTP server SSL
+
+{%- if server.ssl.key_file is defined %}
+smtpd_tls_cert_file={{ server.ssl.cert_file }}
+smtpd_tls_key_file={{ server.ssl.key_file }}
+{%- else %}
 smtpd_tls_cert_file=/etc/postfix/ssl/{{ server.origin }}.crt
 smtpd_tls_key_file=/etc/postfix/ssl/{{ server.origin }}.key
+{%- endif %}
 smtpd_tls_session_cache_database = btree:${data_directory}/smtpd_scache
 smtpd_tls_security_level = {%- if server.ssl.require is defined and server.ssl.require %}encrypt{%- else %}may{%- endif %}
 smtpd_tls_auth_only = yes
@@ -15,8 +21,13 @@ smtpd_tls_protocols = !SSLv2,!SSLv3
 smtpd_tls_loglevel = 1
 
 # SMTP client certificate
+{%- if server.ssl.key_file is defined %}
+smtp_tls_cert_file={{ server.ssl.cert_file }}
+smtp_tls_key_file={{ server.ssl.key_file }}
+{%- else %}
 smtp_tls_cert_file=/etc/postfix/ssl/{{ server.origin }}.crt
 smtp_tls_key_file=/etc/postfix/ssl/{{ server.origin }}.key
+{%- endif %}
 
 # See /usr/share/doc/postfix/TLS_README.gz in the postfix-doc package for
 # information on enabling SSL in the smtp client.
