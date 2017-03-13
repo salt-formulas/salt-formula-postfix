@@ -2,31 +2,31 @@ doc:
   name: Postfix
   description: Postfix Mail Transfer Agent
   role:
-  {%- if pillar.postfix.server is defined %}
+  {%- if pillar.postfix.server is defined and pillar.postfix.server.enabled == True %}
   {%- from "postfix/map.jinja" import server with context %}
     server:
       name: server
       param:
         myorigin: {{ server.myorigin }}
-        mailbox_base: {{ server.mailbox_base }}
-        message_size_limit: {{ server.message_size_limit }}
+        mailbox_base: {{ server.get('mailbox_base') }}
+        message_size_limit: {{ server.get('message_size_limit') }}
   {%- endif %}
-  {%- if pillar.postfix.relay is defined %}
+  {%- if pillar.postfix.relay is defined and pillar.postfix.relay.enabled == True %}
   {%- from "postfix/map.jinja" import server, relay with context %}
     server:
       name: relay
       param:
         myorigin: {{ server.myorigin }}
-        message_size_limit: {{ server.message_size_limit }}
+        message_size_limit: {{ server.message_size_limit|default('default') }}
         relayhost: {{ relay.host }}
         interfaces: {{ relay.interfaces }}
   {%- endif %}
-  {%- if pillar.postfix.backupmx is defined %}
+  {%- if pillar.postfix.backupmx is defined and pillar.postfix.backupmx.enabled == True %}
   {%- from "postfix/map.jinja" import server, backupmx with context %}
     server:
       name: backupmx
       param:
         myorigin: {{ server.myorigin }}
-        queue_lifetime: {{ backupmx.queue.lifetime }}
+        queue_lifetime: {{ backupmx.get('queue', {}).get('lifetime') }}
         relay_domains: {% if backupmx.domains is defined %}{{ backupmx.domains|yaml }}{% else %}[]{% endif %}
   {%- endif %}
