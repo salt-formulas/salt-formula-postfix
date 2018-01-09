@@ -10,6 +10,6 @@ Vcs-Git: https://github.com/tcpcloud/salt-formula-postfix.git
 
 Package: salt-formula-postfix
 Architecture: all
-Depends: ${misc:Depends}, salt-master, reclass
+Depends: ${misc:Depends}
 Description: Postfix Salt formula
  Install and configure Postfix server and relay.
