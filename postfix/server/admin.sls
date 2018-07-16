@@ -4,9 +4,7 @@
 
 postfixadmin_packages:
   pkg.installed:
-    - names:
-      - postfixadmin
-      - php5-imap
+    - names: {{ server.pkgs_postfixadmin }}
 
 postfixadmin_dbconfig:
   file.managed:

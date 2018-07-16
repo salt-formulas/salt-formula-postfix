@@ -5,6 +5,9 @@ postfix:
     myorigin: mx01.local
     origin: mx01.local
     mailbox_base: /srv/mail
+    pkgs_postfixadmin:
+    - 'postfixadmin'
+    - 'php7.0-imap'
     dovecot_lmtp:
       enabled: true
       type: unix

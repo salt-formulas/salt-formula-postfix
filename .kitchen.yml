@@ -1,10 +1,10 @@
 # vim: ft=yaml
 ---
 driver:
-  name: vagrant
-  customize:
-    memory: 512
-  vm_hostname: postfix.ci.local
+  name: docker
+  hostname: helm.ci.local
+  #socket: tcp://127.0.0.1:2376
+  use_sudo: false
 
 provisioner:
   name: salt_solo
@@ -27,11 +27,14 @@ provisioner:
       server:
         ssl:
           enabled: false
+  grains:
+    noservices: true
 
 platforms:
-  - name: ubuntu-14.04
-#  - name: ubuntu-16.04
-#  - name: centos-7.1
+  - name: <%=ENV['PLATFORM'] ||  'saltstack-ubuntu-xenial-salt-stable' %>
+    driver_config:
+      image: <%=ENV['PLATFORM'] || 'epcim/salt-formulas:saltstack-ubuntu-xenial-salt-stable'%>
+      platform: ubuntu
 
 suites:
 
