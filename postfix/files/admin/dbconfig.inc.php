@@ -6,4 +6,4 @@ $basepath='';
 $dbname='{{ server.mysql.database }}';
 $dbserver='{{ server.mysql.host }}';
 $dbport='3306';
-$dbtype='mysql';
+$dbtype='mysqli';
