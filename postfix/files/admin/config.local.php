@@ -21,7 +21,7 @@ $CONF['footer_link'] = '{{ server.admin.footer.link }}';
 
 {%- if server.admin.default_aliases %}
 $CONF['default_aliases'] = array (
-    {%- for alias, goto in server.admin.default_aliases.iteritems() %}
+    {%- for alias, goto in server.admin.default_aliases.items() %}
     '{{ alias }}' => '{{ goto }}',
     {%- endfor %}
 );
